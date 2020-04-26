@@ -1824,7 +1824,7 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
@@ -2225,9 +2225,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &913270171
 MeshRenderer:
@@ -4079,7 +4079,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c804637eea845d54cbbd605344e047bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnableLoadDataFromDataBase: 1
+  EnableLoadDataFromDataBase: 0
   dataNN: {fileID: 11400000, guid: 7cd99f02c1392a64d96866ac8987f611, type: 2}
 --- !u!1 &1312505096
 GameObject:
@@ -6410,9 +6410,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1882306960
 MeshRenderer:
@@ -6724,9 +6724,9 @@ MeshCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 3
+  serializedVersion: 4
   m_Convex: 0
-  m_CookingOptions: 14
+  m_CookingOptions: 30
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!23 &1922129227
 MeshRenderer:

@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/_scenes/02_selection.unity
     guid: b32753dd4e0238944863642a3d1823df
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/03_Main_Genetic_Algorithm.unity
     guid: 8132d362124d5074e86cf1ce1c1afc44
+  - enabled: 1
+    path: Assets/_scenes/testwebgl.unity
+    guid: f1dcfb2e45783514dac923f9fdfab81b
   m_configObjects: {}
