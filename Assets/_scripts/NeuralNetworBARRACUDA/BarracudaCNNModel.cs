@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 //using MLAgents;
-using Barracuda;
+using Unity.Barracuda;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.ImgprocModule;
 using OpenCVForUnity.UnityUtils;

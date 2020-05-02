@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Barracuda;
+using Unity.Barracuda;
 using System;
 
 public class BarracudaFinalOut : MonoBehaviour

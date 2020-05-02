@@ -11,6 +11,7 @@ public class DataForNeuralNetwork : ScriptableObject
     [SerializeField]
     private List<string> names;
 
+#pragma warning disable CS0108
     [SerializeField]
     private string name;
     [SerializeField]

@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Barracuda;
+using Unity.Barracuda;
 using OpenCVForUnity.CoreModule;
 using OpenCVForUnity.UnityUtils;
 using System;
