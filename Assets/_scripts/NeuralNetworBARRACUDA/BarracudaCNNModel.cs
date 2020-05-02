@@ -64,7 +64,7 @@ public class BarracudaCNNModel : MonoBehaviour
 
         var O = worker.PeekOutput();
         //Debug.Log("this is the ouput of the CNN Barrauda    " + O[0,0,0,1]);
-        Debug.Log("this SHAPE    " + O[0]);
+        //Debug.Log("this SHAPE    " + O[0]);
         
         ScoreFromBarracudaCNN = O[0,0,0,1];
  
