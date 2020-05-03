@@ -3734,7 +3734,7 @@ GameObject:
   - component: {fileID: 1405949007}
   - component: {fileID: 1405949010}
   m_Layer: 5
-  m_Name: GENETIC
+  m_Name: GENETIC_button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3749,7 +3749,7 @@ RectTransform:
   m_GameObject: {fileID: 1405949002}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1747688, y: 0.873575, z: 0.873575}
+  m_LocalScale: {x: 1.6666, y: 1.6666, z: 1.6666}
   m_Children:
   - {fileID: 1883603184}
   m_Father: {fileID: 500359300}
