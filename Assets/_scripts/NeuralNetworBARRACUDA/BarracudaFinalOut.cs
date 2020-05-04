@@ -22,7 +22,7 @@ public class BarracudaFinalOut : MonoBehaviour
     private void Start()
     {
         var model = ModelLoader.Load(ModelFinalOut);
-        worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.ComputePrecompiled, model);
+        worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
     }
 
     // call from leantouch and population manager one during breeding and one for last move
@@ -45,7 +45,7 @@ public class BarracudaFinalOut : MonoBehaviour
         worker.Execute(tensor);
         //Tensor outputMobileNet = worker.Fetch();
 
-        var O = worker.Peek();
+        var O = worker.PeekOutput();
 
         //Debug.Log("this is the ouput of the OpenCV features Barrauda    " + O[0, 0, 0, 0]);
         //Debug.Log("this is the ouput of the Final Output Barrauda    " + O[0]);
@@ -58,6 +58,6 @@ public class BarracudaFinalOut : MonoBehaviour
         }
 
         O.Dispose();
-
+       
     }
 }

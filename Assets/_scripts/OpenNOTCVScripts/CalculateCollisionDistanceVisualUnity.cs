@@ -59,10 +59,13 @@ public class CalculateCollisionDistanceVisualUnity : MonoBehaviour
         int i = 0;
         foreach (List<GameObject> pair in PairwaiseElementsOfComposition)
         {
-            MeshCollider MeshColStart = pair[0].GetComponent<MeshCollider>();
+            Collider MeshColStart = pair[0].GetComponent<Collider>();
+
+            
+
             Vector3 MeshCollStart = MeshColStart.ClosestPointOnBounds(pair[1].transform.position);
 
-            MeshCollider MeshColEnd = pair[1].GetComponent<MeshCollider>();
+            Collider MeshColEnd = pair[1].GetComponent<Collider>();
             Vector3 MeshCollEnd = MeshColEnd.ClosestPointOnBounds(pair[0].transform.position);
 
             if (drawRenderedLinesDebug == true)

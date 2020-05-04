@@ -94,7 +94,6 @@ GameObject:
   - component: {fileID: 8465226300775124053}
   - component: {fileID: 8465226300771699831}
   - component: {fileID: 8465226300772830903}
-  - component: {fileID: 8465226299748738671}
   - component: {fileID: 8465226300774764651}
   - component: {fileID: 8465226300774764648}
   - component: {fileID: 8465226299748738664}
@@ -105,6 +104,7 @@ GameObject:
   - component: {fileID: 8465226300774764650}
   - component: {fileID: 8465226300774764653}
   - component: {fileID: 651400030877942061}
+  - component: {fileID: 2004696207032121006}
   m_Layer: 9
   m_Name: cup
   m_TagString: ItemsInComposition
@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8465226300774764661}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.6199986, y: -1.1368684e-13, z: -0.0000011920931}
+  m_LocalPosition: {x: 0.619978, y: 5.820766e-11, z: 0.0005102159}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8465226299762030693}
@@ -148,6 +148,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -159,6 +160,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -171,20 +173,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &8465226299748738671
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8465226300774764661}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 06a7b5fa3f81f2e4a9e47b6e3bb96180, type: 3}
 --- !u!114 &8465226300774764651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,23 +269,15 @@ MonoBehaviour:
   onSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Lean.Touch.LeanSelectable+LeanFingerEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onSelectSet:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Lean.Touch.LeanSelectable+LeanFingerEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onSelectUp:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Lean.Touch.LeanSelectable+LeanFingerEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onDeselect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   isSelected: 0
 --- !u!114 &8465226300774764654
 MonoBehaviour:
@@ -345,6 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d216ab5f10dc7204f89aba79a8251c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UseBoundingBox: 1
 --- !u!114 &651400030877942061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,3 +338,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81be3d69d20cc243931b3ad9ecd9f07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &2004696207032121006
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8465226300774764661}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.270661
+  m_Height: 0.541322
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.3, z: 0}

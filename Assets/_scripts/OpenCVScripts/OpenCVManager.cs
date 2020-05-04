@@ -11,7 +11,7 @@ using System;
 public class OpenCVManager : MonoBehaviour
 {
     public RenderTexture camRenderTexture;
-    public int ScaleFactorScreenBalance = 4;
+    public int ScaleFactorScreenBalance = 20;
     public event Action<float> OnPixelsCountBalanceChanged;
 
 
