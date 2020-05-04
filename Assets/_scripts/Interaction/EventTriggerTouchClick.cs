@@ -65,25 +65,37 @@ namespace Lean.Touch
 
         public void OnFingerSet(LeanFinger finger)
         {
+            //openCVManager.CallForOpenCVCalculationUpdates();
+            //gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
+
+            //// inferenceScoreFeatures.CallTOCalculateFeaturesAllScores();
+            //// inferenceNNfomDATABASE.CallTOCalculateNNFrontTopcore();
+            //// inferenceCompositionML.CallTOCalculateMobileNetScore();
+            //// inferenceFinalOut.CallTOCalculateFinalOutScore();
+
+            //barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+            //barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+            //barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+            //barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+            ////Debug.Log("Finger " + finger.Index + " is still touching the screen");
+        }
+
+        public void OnFingerUp(LeanFinger finger)
+        {
+
+            //Debug.Log("Finger " + finger.Index + " finished touching the screen");
+
             openCVManager.CallForOpenCVCalculationUpdates();
             gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
 
-            // inferenceScoreFeatures.CallTOCalculateFeaturesAllScores();
-            // inferenceNNfomDATABASE.CallTOCalculateNNFrontTopcore();
-            // inferenceCompositionML.CallTOCalculateMobileNetScore();
-            // inferenceFinalOut.CallTOCalculateFinalOutScore();
+           
 
             barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
             barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
             barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
             barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
-            //Debug.Log("Finger " + finger.Index + " is still touching the screen");
-        }
 
-        public void OnFingerUp(LeanFinger finger)
-        {
-            //openCVManager.CallTOCalculateAreaLeftRight();
-            //Debug.Log("Finger " + finger.Index + " finished touching the screen");
+
         }
 
         public void OnFingerTap(LeanFinger finger)

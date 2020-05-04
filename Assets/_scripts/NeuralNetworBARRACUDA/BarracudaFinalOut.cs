@@ -57,7 +57,7 @@ public class BarracudaFinalOut : MonoBehaviour
             OnScoreFinalOutChanged(scoreFinalOut);
         }
 
-        O.Dispose();
+        //O.Dispose();
        
     }
 }
