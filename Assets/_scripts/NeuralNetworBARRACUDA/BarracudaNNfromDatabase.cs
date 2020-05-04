@@ -55,7 +55,7 @@ public class BarracudaNNfromDatabase : MonoBehaviour
         worker.Execute(tensor);
         //Tensor outputMobileNet = worker.Fetch();
 
-        var O = worker.Peek();
+        var O = worker.PeekOutput();
         //Debug.Log("this is the ouput of the TOP FRONT Barrauda    " + O[0, 0, 0, 1]);
 
         scoreNNFrontTop = O[0, 0, 0, 1];
@@ -66,7 +66,7 @@ public class BarracudaNNfromDatabase : MonoBehaviour
         }
 
         O.Dispose();
-        //worker.Dispose();
+        
     }
 
 

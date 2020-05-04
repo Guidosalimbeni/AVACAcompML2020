@@ -103,8 +103,8 @@ GameObject:
   - component: {fileID: 8148163577056148421}
   - component: {fileID: 8148163577056148420}
   - component: {fileID: 8148163577056148419}
-  - component: {fileID: 8148163577056148418}
   - component: {fileID: 885756534886620223}
+  - component: {fileID: 5629360016203977910}
   m_Layer: 0
   m_Name: vase
   m_TagString: Untagged
@@ -120,7 +120,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8148163577056148416}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.1368684e-13, z: -0.0000011920931}
+  m_LocalPosition: {x: 0, y: 1.4551915e-11, z: 0.00009250644}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 8002299544243994478}
@@ -148,6 +148,7 @@ MeshRenderer:
   m_MotionVectors: 1
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -159,6 +160,7 @@ MeshRenderer:
   m_ProbeAnchor: {fileID: 0}
   m_LightProbeVolumeOverride: {fileID: 0}
   m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
   m_PreserveUVs: 0
   m_IgnoreNormalsForChartDetection: 0
   m_ImportantGI: 0
@@ -242,23 +244,15 @@ MonoBehaviour:
   onSelect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Lean.Touch.LeanSelectable+LeanFingerEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onSelectSet:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Lean.Touch.LeanSelectable+LeanFingerEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onSelectUp:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: Lean.Touch.LeanSelectable+LeanFingerEvent, Assembly-CSharp, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   onDeselect:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
-      Culture=neutral, PublicKeyToken=null
   isSelected: 0
 --- !u!114 &8148163577056148422
 MonoBehaviour:
@@ -331,20 +325,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d216ab5f10dc7204f89aba79a8251c59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!64 &8148163577056148418
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8148163577056148416}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 4300000, guid: 36775fce7170f184a85e19ed326b2700, type: 3}
+  UseBoundingBox: 1
 --- !u!114 &885756534886620223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -357,3 +338,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d81be3d69d20cc243931b3ad9ecd9f07, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!136 &5629360016203977910
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8148163577056148416}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.179649
+  m_Height: 1.0484271
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.5245825, z: 0}

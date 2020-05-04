@@ -7,17 +7,27 @@ public class CalculateVolumeOfElementComp : MonoBehaviour
 
     public float Volume { get; private set; }
 
+    public bool UseBoundingBox = true;
+
     private void Start()
     {
         Mesh mesh = GetComponent<MeshFilter>().sharedMesh;
 
-        Volume = VolumeOfMesh(mesh);
-        //string msg = "The volume of the mesh is " + volume + " cube units.";
-        //Debug.Log(msg);
 
-        //float volume2 = calculateBondingVolume(mesh);
-        //string msg2 = "The volume of the mesh is BOUNDING " + volume2 + " cube units.";
-        //Debug.Log(msg2);
+        if (UseBoundingBox)
+        {
+            Volume = calculateBondingVolume(mesh);
+            //string msg2 = "The volume of the mesh is BOUNDING " + volume2 + " cube units.";
+            //Debug.Log(msg2);
+        }
+
+        else
+        {
+            Volume = VolumeOfMesh(mesh);
+            //string msg = "The volume of the mesh is " + volume + " cube units.";
+            //Debug.Log(msg);
+        }
+
     }
 
     public float SignedVolumeOfTriangle(Vector3 p1, Vector3 p2, Vector3 p3, Vector3 o)
@@ -57,7 +67,7 @@ public class CalculateVolumeOfElementComp : MonoBehaviour
 
     // need to multiply by each scale 
 
-    private float calculateBondingVolume (Mesh mesh)
+    private float calculateBondingVolume(Mesh mesh)
     {
         float volume = mesh.bounds.size.x * mesh.bounds.size.y * mesh.bounds.size.z;
         return volume;
