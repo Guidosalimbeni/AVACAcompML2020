@@ -16,6 +16,8 @@ public class LoadSceneInputUsername : MonoBehaviour
     {
         //usernameInputField = GetComponent<TMP_InputField>();
         //usernameInputField.onEndEdit.AddListener(TryLoadScene);
+
+        username = "player_default";
     }
 
     public void SubmitAndStartGame()
