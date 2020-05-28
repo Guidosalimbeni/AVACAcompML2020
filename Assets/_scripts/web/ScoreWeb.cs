@@ -41,4 +41,9 @@ public class ScoreWeb : MonoBehaviour
     {
         return b1 + (s - a1) * (b2 - b1) / (a2 - a1);
     }
+
+    private void OnDisable()
+    {
+        barracudaFinalOut.OnScoreFinalOutChanged -= Handle_OnScoreFinalOutChanged;
+    }
 }

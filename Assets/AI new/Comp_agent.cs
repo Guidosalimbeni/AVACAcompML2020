@@ -8,9 +8,31 @@ public class Comp_agent : Agent
     
     public bool useVectorObs;
     public float agentRunSpeed = 10;
+    public float target = 0.95f;
     Rigidbody m_AgentRb;
-    
-    int m_Selection;
+
+    private BarracudaFinalOut barracudaFinalOut;
+    private float scoreFinalOut;
+
+    private void Awake()
+    {
+
+        barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
+        barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+    }
+
+    private void Handle_OnScoreFinalOutChanged(float scoreFinalOutPassed)
+    {
+        scoreFinalOut = scoreFinalOutPassed;
+       
+        if (scoreFinalOut > target)
+        {
+            SetReward(1f);
+            EndEpisode();
+
+        }
+        
+    }
 
     public override void Initialize()
     {
@@ -59,24 +81,6 @@ public class Comp_agent : Agent
         MoveAgent(vectorAction);
     }
 
-    void OnCollisionEnter(Collision col)
-    {
-        if (col.gameObject.CompareTag("symbol_O_Goal") || col.gameObject.CompareTag("symbol_X_Goal"))
-        {
-            if ((m_Selection == 0 && col.gameObject.CompareTag("symbol_O_Goal")) ||
-                (m_Selection == 1 && col.gameObject.CompareTag("symbol_X_Goal")))
-            {
-                SetReward(1f);
-                
-            }
-            else
-            {
-                SetReward(-0.1f);
-                
-            }
-            EndEpisode();
-        }
-    }
 
     public override void Heuristic(float[] actionsOut)
     {
@@ -101,45 +105,15 @@ public class Comp_agent : Agent
 
     public override void OnEpisodeBegin()
     {
-        //var agentOffset = -15f;
-        //var blockOffset = 0f;
-        //m_Selection = Random.Range(0, 2);
-        //if (m_Selection == 0)
-        //{
-        //    symbolO.transform.position =
-        //        new Vector3(0f + Random.Range(-3f, 3f), 2f, blockOffset + Random.Range(-5f, 5f))
-        //        + ground.transform.position;
-        //    symbolX.transform.position =
-        //        new Vector3(0f, -1000f, blockOffset + Random.Range(-5f, 5f))
-        //        + ground.transform.position;
-        //}
-        //else
-        //{
-        //    symbolO.transform.position =
-        //        new Vector3(0f, -1000f, blockOffset + Random.Range(-5f, 5f))
-        //        + ground.transform.position;
-        //    symbolX.transform.position =
-        //        new Vector3(0f, 2f, blockOffset + Random.Range(-5f, 5f))
-        //        + ground.transform.position;
-        //}
+        transform.position = new Vector3(0f + Random.Range(-2f, 2f),1f,  Random.Range(-2f, 2f));
+        transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        m_AgentRb.velocity *= 0f;
 
-        //transform.position = new Vector3(0f + Random.Range(-3f, 3f),
-        //    1f, agentOffset + Random.Range(-5f, 5f))
-        //    + ground.transform.position;
-        //transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-        //m_AgentRb.velocity *= 0f;
+    }
 
-        //var goalPos = Random.Range(0, 2);
-        //if (goalPos == 0)
-        //{
-        //    symbolOGoal.transform.position = new Vector3(7f, 0.5f, 22.29f) + area.transform.position;
-        //    symbolXGoal.transform.position = new Vector3(-7f, 0.5f, 22.29f) + area.transform.position;
-        //}
-        //else
-        //{
-        //    symbolXGoal.transform.position = new Vector3(7f, 0.5f, 22.29f) + area.transform.position;
-        //    symbolOGoal.transform.position = new Vector3(-7f, 0.5f, 22.29f) + area.transform.position;
-        //}
+    private void OnDisable()
+    {
+        barracudaFinalOut.OnScoreFinalOutChanged -= Handle_OnScoreFinalOutChanged;
     }
 }
 
