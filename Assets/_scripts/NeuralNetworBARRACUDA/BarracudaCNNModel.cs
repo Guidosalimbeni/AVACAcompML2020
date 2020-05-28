@@ -68,7 +68,7 @@ public class BarracudaCNNModel : MonoBehaviour
         
         ScoreFromBarracudaCNN = O[0,0,0,1];
  
-        O.Dispose();
+        //O.Dispose();
         
 
         if (OnScorescoreMobileNetChanged != null)

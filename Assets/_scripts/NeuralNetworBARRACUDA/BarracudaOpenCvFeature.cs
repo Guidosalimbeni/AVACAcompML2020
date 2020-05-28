@@ -61,7 +61,7 @@ public class BarracudaOpenCvFeature : MonoBehaviour
             OnScoreAllscoresfeatures(ScoreAllscoreFeatures);
         }
 
-        O.Dispose();
+        //O.Dispose();
         
     }
 }

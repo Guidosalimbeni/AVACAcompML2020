@@ -3,16 +3,11 @@ using System.Collections.Generic;
 
 namespace Lean.Touch
 {
-    public class EventTriggerTouchClick : MonoBehaviour
+    public class EventTriggerTouchSimpleWeb : MonoBehaviour
     {
 
         private OpenCVManager openCVManager;
         private GameVisualManager gameManagerNotOpenCV;
-
-        // private InferenceNNfomDATABASE inferenceNNfomDATABASE;
-        // private InferenceCompositionML inferenceCompositionML;
-        // private InferenceScoreFeatures inferenceScoreFeatures;
-        // private InferenceFinalOut inferenceFinalOut;
 
         private BarracudaCNNModel barracudaCNNModel;
         private BarracudaNNfromDatabase barracudaNNfromDatabase;
@@ -40,7 +35,7 @@ namespace Lean.Touch
             // inferenceCompositionML = FindObjectOfType<InferenceCompositionML>();
             // inferenceFinalOut = FindObjectOfType<InferenceFinalOut>();
 
-            barracudaCNNModel =  FindObjectOfType<BarracudaCNNModel>();
+            barracudaCNNModel = FindObjectOfType<BarracudaCNNModel>();
             barracudaNNfromDatabase = FindObjectOfType<BarracudaNNfromDatabase>();
             barracudaOpenCvFeature = FindObjectOfType<BarracudaOpenCvFeature>();
             barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
@@ -59,25 +54,12 @@ namespace Lean.Touch
 
         public void OnFingerDown(LeanFinger finger)
         {
-            //openCVManager.CallTOCalculateAreaLeftRight();
-            //Debug.Log("Finger " + finger.Index + " began touching the screen");
+
         }
 
         public void OnFingerSet(LeanFinger finger)
         {
-            //openCVManager.CallForOpenCVCalculationUpdates();
-            //gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
-
-            //// inferenceScoreFeatures.CallTOCalculateFeaturesAllScores();
-            //// inferenceNNfomDATABASE.CallTOCalculateNNFrontTopcore();
-            //// inferenceCompositionML.CallTOCalculateMobileNetScore();
-            //// inferenceFinalOut.CallTOCalculateFinalOutScore();
-
-            //barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
-            //barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-            //barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-            //barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
-            ////Debug.Log("Finger " + finger.Index + " is still touching the screen");
+ 
         }
 
         public void OnFingerUp(LeanFinger finger)
@@ -88,7 +70,7 @@ namespace Lean.Touch
             openCVManager.CallForOpenCVCalculationUpdates();
             gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
 
-           
+
 
             barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
             barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();

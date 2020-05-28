@@ -28,8 +28,11 @@ public class CalculateCollisionDistanceVisualUnity : MonoBehaviour
     private void Start()
     {
        
-
-        PairwaiseElementsOfComposition = PairwaiseOperation(gamePopulationController.ElementsCompositions);
+        if (gamePopulationController)
+        {
+            PairwaiseElementsOfComposition = PairwaiseOperation(gamePopulationController.ElementsCompositions);
+        }
+        
 
         if (drawRenderedLinesDebug == true)
         {

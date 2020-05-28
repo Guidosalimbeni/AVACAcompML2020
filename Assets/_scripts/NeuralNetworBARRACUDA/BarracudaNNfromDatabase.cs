@@ -65,7 +65,7 @@ public class BarracudaNNfromDatabase : MonoBehaviour
             OnScorescoreNNFrontTopChanged(scoreNNFrontTop);
         }
 
-        O.Dispose();
+        //O.Dispose();
         
     }
 
