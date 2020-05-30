@@ -2,6 +2,7 @@
 using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
+using System;
 
 public class Comp_agent : Agent
 {
@@ -13,6 +14,8 @@ public class Comp_agent : Agent
 
     private BarracudaFinalOut barracudaFinalOut;
     private float scoreFinalOut;
+    
+    // mettere altri score e dare rewards a seconda... dello score...
 
     private void Awake()
     {
@@ -24,19 +27,18 @@ public class Comp_agent : Agent
     private void Handle_OnScoreFinalOutChanged(float scoreFinalOutPassed)
     {
         scoreFinalOut = scoreFinalOutPassed;
-       
-        if (scoreFinalOut > target)
-        {
-            SetReward(1f);
-            EndEpisode();
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "bounds")
+        {
+            AddReward(-0.01f);
         }
-        
     }
 
     public override void Initialize()
     {
-        
         m_AgentRb = GetComponent<Rigidbody>();
         
     }
@@ -48,7 +50,6 @@ public class Comp_agent : Agent
             sensor.AddObservation(StepCount / (float)MaxStep);
         }
     }
-
 
     public void MoveAgent(float[] act)
     {
@@ -73,6 +74,38 @@ public class Comp_agent : Agent
         }
         transform.Rotate(rotateDir, Time.deltaTime * 150f);
         m_AgentRb.AddForce(dirToGo * agentRunSpeed, ForceMode.VelocityChange);
+
+        FireScoreCalculation();
+    }
+
+    private void FireScoreCalculation()
+    {
+        if (scoreFinalOut > target)
+        {
+            SetReward(1f);
+            EndEpisode();
+        }
+
+        if (scoreFinalOut > 0.5f)
+        {
+            Debug.Log(" got at 0.5");
+            AddReward(0.05f);
+            EndEpisode();
+        }
+
+        if (scoreFinalOut > 0.2f)
+        {
+            Debug.Log(" got at 0.2");
+            AddReward(0.0025f);
+            EndEpisode();
+        }
+
+        if (scoreFinalOut > 0.1f)
+        {
+            Debug.Log(" got at 0.1");
+            AddReward(0.0005f);
+            EndEpisode();
+        }
     }
 
     public override void OnActionReceived(float[] vectorAction)
@@ -105,8 +138,8 @@ public class Comp_agent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.position = new Vector3(0f + Random.Range(-2f, 2f),1f,  Random.Range(-2f, 2f));
-        transform.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+        transform.position = new Vector3(UnityEngine.Random.Range(-2f, 2f), 0f, UnityEngine.Random.Range(-2f, 2f));
+        transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
         m_AgentRb.velocity *= 0f;
 
     }
