@@ -26,7 +26,7 @@ public class ColorGradientNNFrontTop : MonoBehaviour
     {
         UpdateLawOfLeverPixelsUI(scoreNNFrontTop);
         if (text != null)
-            text.text = scoreNNFrontTop.ToString();
+            text.text = scoreNNFrontTop.ToString("F2");
     }
 
     public void UpdateLawOfLeverPixelsUI(float score)

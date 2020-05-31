@@ -10,37 +10,31 @@ public class Comp_agent : Agent
     public bool useVectorObs;
     public float agentRunSpeed = 10;
     public float target = 0.95f;
+    public Transform centerPoint;
     Rigidbody m_AgentRb;
 
-    private BarracudaFinalOut barracudaFinalOut;
-    private float scoreFinalOut;
-    
-    // mettere altri score e dare rewards a seconda... dello score...
+    private ScoreCalculator scoreCalculator;
+    private bool targetReached = false;
 
     private void Awake()
     {
-
-        barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
-        barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+        
+        scoreCalculator = FindObjectOfType<ScoreCalculator>();
     }
 
-    private void Handle_OnScoreFinalOutChanged(float scoreFinalOutPassed)
-    {
-        scoreFinalOut = scoreFinalOutPassed;
-    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "bounds")
         {
-            AddReward(-0.01f);
+            SetReward(-1f);
+            EndEpisode();
         }
     }
 
     public override void Initialize()
     {
         m_AgentRb = GetComponent<Rigidbody>();
-        
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -48,6 +42,10 @@ public class Comp_agent : Agent
         if (useVectorObs)
         {
             sensor.AddObservation(StepCount / (float)MaxStep);
+            sensor.AddObservation(gameObject.transform.rotation.y);
+            sensor.AddObservation(centerPoint.transform.position - gameObject.transform.position);
+            sensor.AddObservation(m_AgentRb.velocity);
+            sensor.AddObservation(m_AgentRb.mass);
         }
     }
 
@@ -72,48 +70,74 @@ public class Comp_agent : Agent
                 rotateDir = transform.up * -1f;
                 break;
         }
-        transform.Rotate(rotateDir, Time.deltaTime * 150f);
-        m_AgentRb.AddForce(dirToGo * agentRunSpeed, ForceMode.VelocityChange);
+
+        if (targetReached == false)
+        {
+            transform.Rotate(rotateDir, Time.deltaTime * 150f);
+            m_AgentRb.AddForce(dirToGo * agentRunSpeed, ForceMode.VelocityChange);
+        }
+        
 
         FireScoreCalculation();
     }
 
     private void FireScoreCalculation()
     {
+        float scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
+        //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
+        float scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
+        float scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
+        float scoreMobileNet = scoreCalculator.scoreMobileNet;
+        float scoreAllscorefeatures = scoreCalculator.scoreAllscorefeatures;
+
+
         if (scoreFinalOut > target)
         {
             SetReward(1f);
-            EndEpisode();
+            //EndEpisode();
+            targetReached = true;
+            m_AgentRb.velocity *= 0f;
         }
 
-        if (scoreFinalOut > 0.5f)
-        {
-            Debug.Log(" got at 0.5");
-            AddReward(0.05f);
-            EndEpisode();
-        }
+        else {
 
-        if (scoreFinalOut > 0.2f)
-        {
-            Debug.Log(" got at 0.2");
-            AddReward(0.0025f);
-            EndEpisode();
-        }
+            targetReached = false;
 
-        if (scoreFinalOut > 0.1f)
+            if (scoreMobileNet > target * 0.6)
+            {
+                Debug.Log(" got CNN");
+                AddReward(0.2f);
+
+            }
+
+            if (scoreNNFrontTop > target * 0.6)
+            {
+                Debug.Log(" got NN front TOP");
+                AddReward(0.2f);
+            }
+
+            if (scoreAllscorefeatures > target * 0.6)
+            {
+                Debug.Log(" got all features");
+                AddReward(0.2f);
+            }
+        } 
+
+        if (scoreUnityVisual == 0)
         {
-            Debug.Log(" got at 0.1");
-            AddReward(0.0005f);
-            EndEpisode();
+            Debug.Log(" collision ");
+            SetReward(-0.05f);
+            //EndEpisode(); // will make everything restarts
         }
+        
+
     }
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        AddReward(-1f / MaxStep);
+        AddReward(-0.5f / MaxStep);
         MoveAgent(vectorAction);
     }
-
 
     public override void Heuristic(float[] actionsOut)
     {
@@ -141,12 +165,7 @@ public class Comp_agent : Agent
         transform.position = new Vector3(UnityEngine.Random.Range(-2f, 2f), 0f, UnityEngine.Random.Range(-2f, 2f));
         transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
         m_AgentRb.velocity *= 0f;
-
     }
 
-    private void OnDisable()
-    {
-        barracudaFinalOut.OnScoreFinalOutChanged -= Handle_OnScoreFinalOutChanged;
-    }
 }
 

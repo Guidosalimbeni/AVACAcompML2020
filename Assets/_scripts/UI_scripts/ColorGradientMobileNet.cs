@@ -27,7 +27,7 @@ public class ColorGradientMobileNet : MonoBehaviour
     {
         UpdateMobileScoreUI(scoreMobileNetPassed);
         if (text != null)
-            text.text = scoreMobileNetPassed.ToString();
+            text.text = scoreMobileNetPassed.ToString("F2");
     }
 
     public void UpdateMobileScoreUI(float score)

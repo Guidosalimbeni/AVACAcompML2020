@@ -23,7 +23,7 @@ public class ColorGradientFinalOut : MonoBehaviour
     {
         UpdateMobileScoreUI(scoreFinalPassed);
         if (text != null)
-            text.text = scoreFinalPassed.ToString();
+            text.text = scoreFinalPassed.ToString("F2");
     }
 
     public void UpdateMobileScoreUI(float score)

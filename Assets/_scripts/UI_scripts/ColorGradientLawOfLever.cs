@@ -21,7 +21,7 @@ public class ColorGradientLawOfLever : MonoBehaviour
         UpdateLawOfLeverPixelsUI(scorelawOfLever);
         if (text != null)
         {
-            text.text = scorelawOfLever.ToString();
+            text.text = scorelawOfLever.ToString("F2");
         }
     }
 

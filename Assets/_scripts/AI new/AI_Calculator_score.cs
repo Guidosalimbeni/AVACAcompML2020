@@ -11,7 +11,7 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaOpenCvFeature barracudaOpenCvFeature;
     private BarracudaFinalOut barracudaFinalOut;
 
-    public int steps = 20;
+    public int steps = 10;
     private int frames = 0;
     
     private void Awake()
@@ -28,8 +28,8 @@ public class AI_Calculator_score : MonoBehaviour
         frames++;
         if (frames % steps == 0)
         {
-            openCVManager.CallForOpenCVCalculationUpdates();
-            gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
+            openCVManager.CallForOpenCVCalculationUpdates(); // 1
+            gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
             barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
             barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
             barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();

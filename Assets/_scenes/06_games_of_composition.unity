@@ -5785,6 +5785,36 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!1 &1518298868
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1518298869}
+  m_Layer: 0
+  m_Name: CenterPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1518298869
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518298868}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1523820683
 GameObject:
   m_ObjectHideFlags: 0
@@ -7030,7 +7060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5723654147b7124cab98d83b2b49b28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steps: 20
+  steps: 4
 --- !u!1 &1794826628
 GameObject:
   m_ObjectHideFlags: 0
@@ -7583,7 +7613,7 @@ Transform:
   - {fileID: 1243336898}
   - {fileID: 1304586263}
   m_Father: {fileID: 0}
-  m_RootOrder: 14
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1907108662
 GameObject:
@@ -7616,7 +7646,7 @@ Transform:
   - {fileID: 1940973278}
   - {fileID: 1895393195}
   m_Father: {fileID: 0}
-  m_RootOrder: 15
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1917239376
 GameObject:
@@ -9019,12 +9049,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
+    VectorObservationSize: 6
     NumStackedVectorObservations: 2
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 36c1ba808bd27484c9462acfeea521cd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: avaca_behaviour
@@ -9149,17 +9179,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
+    VectorObservationSize: 6
     NumStackedVectorObservations: 2
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 36c1ba808bd27484c9462acfeea521cd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: avaca_behaviour
   TeamId: 0
-  m_UseChildSensors: 1
+  m_UseChildSensors: 0
 --- !u!4 &2291641894155736034
 Transform:
   m_ObjectHideFlags: 0
@@ -9174,7 +9204,7 @@ Transform:
   - {fileID: 2291641894568604716}
   - {fileID: 2673434416068106243}
   m_Father: {fileID: 0}
-  m_RootOrder: 16
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2291641894155736035
 GameObject:
@@ -9261,7 +9291,8 @@ MonoBehaviour:
   MaxStep: 10000
   useVectorObs: 0
   agentRunSpeed: 0.01
-  target: 0.95
+  target: 0.8
+  centerPoint: {fileID: 1518298869}
 --- !u!114 &2523561994592875582
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9493,7 +9524,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2673434416068199459}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 9
   m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -9669,17 +9700,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
+    VectorObservationSize: 6
     NumStackedVectorObservations: 2
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 36c1ba808bd27484c9462acfeea521cd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: avaca_behaviour
   TeamId: 0
-  m_UseChildSensors: 1
+  m_UseChildSensors: 0
 --- !u!1 &4183307718079236743
 GameObject:
   m_ObjectHideFlags: 0
@@ -9791,7 +9822,7 @@ Transform:
   - {fileID: 5391002453131289745}
   - {fileID: 5050372014770728697}
   m_Father: {fileID: 0}
-  m_RootOrder: 17
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &5391002453131289745
 Transform:
@@ -9837,7 +9868,8 @@ MonoBehaviour:
   MaxStep: 10000
   useVectorObs: 0
   agentRunSpeed: 0.01
-  target: 0.95
+  target: 0.8
+  centerPoint: {fileID: 1518298869}
 --- !u!64 &5901985072550838784
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -9882,7 +9914,7 @@ Transform:
   - {fileID: 6117767888583073951}
   - {fileID: 6117767889649415857}
   m_Father: {fileID: 0}
-  m_RootOrder: 18
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6117767888583073949
 GameObject:
@@ -10227,12 +10259,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
+    VectorObservationSize: 6
     NumStackedVectorObservations: 2
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 36c1ba808bd27484c9462acfeea521cd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: avaca_behaviour
@@ -10256,7 +10288,8 @@ MonoBehaviour:
   MaxStep: 10000
   useVectorObs: 0
   agentRunSpeed: 0.01
-  target: 0.95
+  target: 0.8
+  centerPoint: {fileID: 1518298869}
 --- !u!136 &6117767889649415863
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -10297,7 +10330,7 @@ Rigidbody:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2829705808357433829}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 8
   m_Drag: 0.5
   m_AngularDrag: 0.05
   m_UseGravity: 0
@@ -10367,7 +10400,7 @@ MonoBehaviour:
     VectorActionSize: 05000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 0
-  m_Model: {fileID: 0}
+  m_Model: {fileID: 5022602860645237092, guid: 36c1ba808bd27484c9462acfeea521cd, type: 3}
   m_InferenceDevice: 0
   m_BehaviorType: 0
   m_BehaviorName: avaca_behaviour

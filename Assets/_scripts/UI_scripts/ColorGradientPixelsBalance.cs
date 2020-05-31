@@ -25,7 +25,7 @@ public class ColorGradientPixelsBalance : MonoBehaviour
     {
         UpdateBalancePixelsUI(score);
         if (text != null)
-            text.text = score.ToString();
+            text.text = score.ToString("F2");
     }
 
     public void UpdateBalancePixelsUI(float score)

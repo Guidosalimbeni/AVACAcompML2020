@@ -89,7 +89,7 @@ public class CalculateCollisionDistanceVisualUnity : MonoBehaviour
             {
                 VisualUnityScore = 0;
                 OverlappingColliders = false;
-                return VisualUnityScore;
+                return VisualUnityScore; // this is when they collide
             }
         }
         double meanDistance = 0.0f;

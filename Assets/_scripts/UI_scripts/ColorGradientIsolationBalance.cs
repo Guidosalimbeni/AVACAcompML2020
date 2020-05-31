@@ -21,7 +21,7 @@ public class ColorGradientIsolationBalance : MonoBehaviour
         UpdateLawOfLeverPixelsUI(scoreIsolationbalancePassed);
         if (text != null)
         {
-            text.text = scoreIsolationbalancePassed.ToString();
+            text.text = scoreIsolationbalancePassed.ToString("F2");
         }
     }
 

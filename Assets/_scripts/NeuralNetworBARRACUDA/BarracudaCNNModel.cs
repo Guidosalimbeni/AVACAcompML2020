@@ -67,7 +67,7 @@ public class BarracudaCNNModel : MonoBehaviour
         //Debug.Log("this SHAPE    " + O[0]);
         
         ScoreFromBarracudaCNN = O[0,0,0,1];
- 
+
         //O.Dispose();
         
 
