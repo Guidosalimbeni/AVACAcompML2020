@@ -12,8 +12,13 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaFinalOut barracudaFinalOut;
 
     public int steps = 10;
+    public float target = 0.95f;
     private int frames = 0;
-    
+    public bool movetotarget = true;
+    public bool inferenceMode = false;
+
+
+
     private void Awake()
     {
         openCVManager = FindObjectOfType<OpenCVManager>();

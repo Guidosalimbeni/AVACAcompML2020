@@ -27,6 +27,7 @@ public class Comp_agent : Agent
     {
         if (other.gameObject.tag == "bounds")
         {
+            Debug.Log(" out of table");
             SetReward(-1f);
             EndEpisode();
         }
@@ -94,39 +95,46 @@ public class Comp_agent : Agent
         if (scoreFinalOut > target)
         {
             SetReward(1f);
-            //EndEpisode();
+            Debug.Log(" WINNNNNNIIIINNG");
+            //EndEpisode(); // comment out during inference
             targetReached = true;
             m_AgentRb.velocity *= 0f;
+
         }
 
-        else {
-
+        else
+        {
             targetReached = false;
+        }
 
-            if (scoreMobileNet > target * 0.6)
-            {
-                Debug.Log(" got CNN");
-                AddReward(0.2f);
+        //else {
 
-            }
+        //    targetReached = false;
 
-            if (scoreNNFrontTop > target * 0.6)
-            {
-                Debug.Log(" got NN front TOP");
-                AddReward(0.2f);
-            }
+        //    if (scoreMobileNet > target * 0.6)
+        //    {
+        //        Debug.Log(" got CNN");
+        //        AddReward(1f / MaxStep / 3);
 
-            if (scoreAllscorefeatures > target * 0.6)
-            {
-                Debug.Log(" got all features");
-                AddReward(0.2f);
-            }
-        } 
+        //    }
+
+        //    if (scoreNNFrontTop > target * 0.6)
+        //    {
+        //        Debug.Log(" got NN front TOP");
+        //        AddReward(1f / MaxStep / 3);
+        //    }
+
+        //    if (scoreAllscorefeatures > target * 0.6)
+        //    {
+        //        Debug.Log(" got all features");
+        //        AddReward(1f / MaxStep / 3);
+        //    }
+        //} 
 
         if (scoreUnityVisual == 0)
         {
             Debug.Log(" collision ");
-            SetReward(-0.05f);
+            //SetReward(-0.05f);
             //EndEpisode(); // will make everything restarts
         }
         
@@ -135,7 +143,7 @@ public class Comp_agent : Agent
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        AddReward(-0.5f / MaxStep);
+        AddReward(-1f / MaxStep);
         MoveAgent(vectorAction);
     }
 
@@ -162,7 +170,7 @@ public class Comp_agent : Agent
 
     public override void OnEpisodeBegin()
     {
-        transform.position = new Vector3(UnityEngine.Random.Range(-2f, 2f), 0f, UnityEngine.Random.Range(-2f, 2f));
+        transform.position = new Vector3(UnityEngine.Random.Range(-1f, 1f), 0f, UnityEngine.Random.Range(-1f, 1f));
         transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
         m_AgentRb.velocity *= 0f;
     }
