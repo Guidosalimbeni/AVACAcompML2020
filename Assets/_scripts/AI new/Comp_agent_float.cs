@@ -6,11 +6,11 @@ using System;
 
 public class Comp_agent_float : Agent
 {
-    
+    public bool agentActive = false;
     public bool useVectorObs;
 
     public float speed = 1.0f;
-    public Transform centerPoint;
+    
     public int massOfObject = 1;
     public float HeightOfObject = 1;
 
@@ -18,29 +18,60 @@ public class Comp_agent_float : Agent
     private AI_Calculator_score aI_Calculator_score;
     private bool targetReached = false;
     private Vector3 targetPosition;
-    
+    private Camera cameraPaint;
+    private Camera cameraTop;
+    public Transform centerPoint;
 
     private void Awake()
     {
         
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
         aI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
+        if (aI_Calculator_score.activateAllAgents)
+        {
+            agentActive = true;
+        }
+
+        cameraPaint = Camera.main;
+
+        cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
+        
     }
 
 
-    private void OnTriggerEnter(Collider other)
+private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "bounds")
+
+        if (aI_Calculator_score.inferenceMode == false)
         {
-            Debug.Log(" out of table");
-            SetReward(-1f);
-            EndEpisode();
+            if (other.gameObject.tag == "bounds")
+            {
+                Debug.Log(" out of table");
+                SetReward(-1f);
+                EndEpisode();
+            }
         }
+
+            
     }
 
     public override void Initialize()
     {
-        
+        CameraSensorComponent[] camerasensors = gameObject.GetComponents<CameraSensorComponent>();
+
+        for (int i = 0; i < camerasensors.Length; i++)
+        {
+             if (camerasensors[i].name == "CameraPaint")
+            {
+                
+                camerasensors[i].Camera = cameraPaint;
+            }
+
+            if (camerasensors[i].name == "CameraSensor")
+            {
+                camerasensors[i].Camera = cameraTop;
+            }
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -57,49 +88,53 @@ public class Comp_agent_float : Agent
 
     public void MoveAgent(float[] vectorAction)
     {
-
-        if (targetReached == false)
+        if (agentActive)
         {
-            var posX = Mathf.Clamp(vectorAction[0], -1.5f, 1.5f);
-            var PosZ = Mathf.Clamp(vectorAction[1], -1.5f, 1.5f);
-            var rotateY = Mathf.Clamp(vectorAction[2], -1f, 1f);
-
-            if (aI_Calculator_score.inferenceMode)
+            if (targetReached == false)
             {
-                if (aI_Calculator_score.movetotarget)
+                var posX = Mathf.Clamp(vectorAction[0], -1.5f, 1.5f);
+                var PosZ = Mathf.Clamp(vectorAction[1], -1.5f, 1.5f);
+                var rotateY = Mathf.Clamp(vectorAction[2], -1f, 1f);
+
+                if (aI_Calculator_score.inferenceMode)
                 {
-                    targetPosition = new Vector3(posX,
-                    transform.position.y,
-                    PosZ);
+                    if (aI_Calculator_score.movetotarget)
+                    {
+                        targetPosition = new Vector3(posX,
+                        transform.position.y,
+                        PosZ);
 
-                    float step = speed * Time.deltaTime;
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+                        float step = speed * Time.deltaTime;
+                        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
 
-                    //StartCoroutine(MovetoTarget(targetPosition));
+                        //StartCoroutine(MovetoTarget(targetPosition));
+                    }
+                    else
+                    {
+                        transform.position = new Vector3(posX,
+                        transform.position.y,
+                        PosZ);
+                    }
+
                 }
+
                 else
                 {
                     transform.position = new Vector3(posX,
-                    transform.position.y,
-                    PosZ);
+                        transform.position.y,
+                        PosZ);
                 }
 
-            }
 
-            else
-            {
-                transform.position = new Vector3(posX,
-                    transform.position.y,
-                    PosZ);
+                transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
+
             }
 
 
-            transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
-
+            FireScoreCalculation();
         }
-        
 
-        FireScoreCalculation();
+        
     }
 
     //private IEnumerator MovetoTarget(Vector3 targetPosition)

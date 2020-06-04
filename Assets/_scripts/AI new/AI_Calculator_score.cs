@@ -16,6 +16,7 @@ public class AI_Calculator_score : MonoBehaviour
     private int frames = 0;
     public bool movetotarget = true;
     public bool inferenceMode = false;
+    public bool activateAllAgents = false;
 
 
 
