@@ -164,7 +164,7 @@ public class SendToDatabase : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post("http://www.guidosalimbeni.it/UnityComp/AddToDatabase.php", form))
         {
-            //System.Net.ServicePointManager.Expect100Continue = false; // to avoid some proxy blocking
+            System.Net.ServicePointManager.Expect100Continue = false; // to avoid some proxy blocking
             www.useHttpContinue = false;
 
             yield return www.SendWebRequest();

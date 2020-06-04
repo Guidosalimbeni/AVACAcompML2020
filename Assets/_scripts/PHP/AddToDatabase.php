@@ -5,6 +5,7 @@
 
     //$servername = "mysql.guidosalimbeni.it";
     $servername = "208.97.172.120"; // uploaded via web ftp on dream host since the site is using cloudflare redirect--
+    //$servername = "173.236.176.115 208";
     $server_username = "guidosalimbeni";
     $server_password = "1.oliver";
     $database = "compml"; // Might look something like (ActName_DatabaseName)

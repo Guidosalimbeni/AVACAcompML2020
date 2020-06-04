@@ -11,7 +11,8 @@ public class Comp_agent_float : Agent
 
     public float speed = 1.0f;
     public Transform centerPoint;
-    Rigidbody m_AgentRb;
+    public int massOfObject = 1;
+    public float HeightOfObject = 1;
 
     private ScoreCalculator scoreCalculator;
     private AI_Calculator_score aI_Calculator_score;
@@ -39,7 +40,7 @@ public class Comp_agent_float : Agent
 
     public override void Initialize()
     {
-        m_AgentRb = GetComponent<Rigidbody>();
+        
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -49,8 +50,8 @@ public class Comp_agent_float : Agent
             sensor.AddObservation(StepCount / (float)MaxStep);
             sensor.AddObservation(gameObject.transform.rotation.y);
             sensor.AddObservation(centerPoint.transform.position - gameObject.transform.position);
-            sensor.AddObservation(m_AgentRb.velocity);
-            sensor.AddObservation(m_AgentRb.mass);
+            sensor.AddObservation(HeightOfObject);
+            sensor.AddObservation(massOfObject);
         }
     }
 
@@ -186,7 +187,7 @@ public class Comp_agent_float : Agent
     {
         transform.position = new Vector3(UnityEngine.Random.Range(-1.5f, 1.5f), 0f, UnityEngine.Random.Range(-1.5f, 1.5f));
         transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
-        m_AgentRb.velocity *= 0f;
+        
     }
 
     public override void Heuristic(float[] actionsOut)
