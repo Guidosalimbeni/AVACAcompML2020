@@ -162,6 +162,7 @@ private void OnTriggerEnter(Collider other)
             if (aI_Calculator_score.inferenceMode)
             {
                 targetReached = true;
+                agentActive = false;
             }
             else
             {

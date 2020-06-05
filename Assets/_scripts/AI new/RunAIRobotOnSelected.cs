@@ -1,18 +1,39 @@
-﻿using System.Collections;
+﻿using Lean.Touch;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RunAIRobotOnSelected : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private int countClic = 0;
+    public void InferenceOnSelected()
     {
-        
-    }
+        TagMeElementOfComposition[] items = FindObjectsOfType<TagMeElementOfComposition>();
 
-    // Update is called once per frame
-    void Update()
+        for (int i = 0; i < items.Length; i++)
+        {
+            LeanSelectable lean = items[i].GetComponent<LeanSelectable>();
+            if (lean.IsSelected)
+            {
+                Comp_agent_float agent = items[i].GetComponent<Comp_agent_float>();
+                agent.agentActive = true;
+
+            }
+        }
+    }
+    public void StopInferenceOnSelected()
     {
-        
+        TagMeElementOfComposition[] items = FindObjectsOfType<TagMeElementOfComposition>();
+
+        for (int i = 0; i < items.Length; i++)
+        {
+            LeanSelectable lean = items[i].GetComponent<LeanSelectable>();
+            if (lean.IsSelected)
+            {
+                Comp_agent_float agent = items[i].GetComponent<Comp_agent_float>();
+                agent.agentActive = false;
+
+            }
+        }
     }
 }
