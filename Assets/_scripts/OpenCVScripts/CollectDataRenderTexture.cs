@@ -1,10 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OpenCVForUnity.CoreModule;
-using OpenCVForUnity.UnityUtils;
+//using OpenCVForUnity.CoreModule;
+//using OpenCVForUnity.UnityUtils;
 using System.IO;
-using OpenCVForUnity.ImgprocModule;
+//using OpenCVForUnity.ImgprocModule;
 
 public class CollectDataRenderTexture: MonoBehaviour
 {
@@ -30,43 +30,43 @@ public class CollectDataRenderTexture: MonoBehaviour
     }
 
     // to commnet out for eventually not lose this bit of code
-    public void CollectPixelsValuesFromImageForMainViewRecordInDatabase() // NOT USING THIS
-    {
-        Texture2D imgTexture = ToTexture2D(CompositionRenderTexture);
-        Mat ImageMatrixOpenCV = new Mat(imgTexture.height, imgTexture.width, CvType.CV_8UC1); // 180 * 240 * cv_8uc1
+    //public void CollectPixelsValuesFromImageForMainViewRecordInDatabase() // NOT USING THIS
+    //{
+    //    Texture2D imgTexture = ToTexture2D(CompositionRenderTexture);
+    //    Mat ImageMatrixOpenCV = new Mat(imgTexture.height, imgTexture.width, CvType.CV_8UC1); // 180 * 240 * cv_8uc1
         
-        Utils.texture2DToMat(imgTexture, ImageMatrixOpenCV);
+    //    Utils.texture2DToMat(imgTexture, ImageMatrixOpenCV);
 
-        int rows = ImageMatrixOpenCV.rows();
-        int cols = ImageMatrixOpenCV.cols();
-        int ch = ImageMatrixOpenCV.channels();
-        Size sz = new Size((int)(cols / resizefactorMainCam),(int)(rows/ resizefactorMainCam)); // left as 18 * 24 and i have another render texture just for the mobile net
+    //    int rows = ImageMatrixOpenCV.rows();
+    //    int cols = ImageMatrixOpenCV.cols();
+    //    int ch = ImageMatrixOpenCV.channels();
+    //    Size sz = new Size((int)(cols / resizefactorMainCam),(int)(rows/ resizefactorMainCam)); // left as 18 * 24 and i have another render texture just for the mobile net
 
-        Imgproc.resize(ImageMatrixOpenCV, ImageMatrixOpenCV, sz);
-        Imgproc.cvtColor(ImageMatrixOpenCV, ImageMatrixOpenCV, Imgproc.COLOR_RGB2GRAY);
-        string dataFromMat = ImageMatrixOpenCV.reshape(1, 1).dump();
-        imageMatrixData.ImagePixelsListMainPaintView = dataFromMat;
-    }
+    //    Imgproc.resize(ImageMatrixOpenCV, ImageMatrixOpenCV, sz);
+    //    Imgproc.cvtColor(ImageMatrixOpenCV, ImageMatrixOpenCV, Imgproc.COLOR_RGB2GRAY);
+    //    string dataFromMat = ImageMatrixOpenCV.reshape(1, 1).dump();
+    //    imageMatrixData.ImagePixelsListMainPaintView = dataFromMat;
+    //}
 
-    public void CollectPixelsValuesFromImageForNeuralNetworkDNNOfflineTraining() // NOT USING THIS
-    {
-        Texture2D ImageNNFrontViewTexture = ToTexture2D(ImageNNFrontViewRT);
-        Mat ImageMatrixNNfrontView = new Mat(ImageNNFrontViewTexture.height, ImageNNFrontViewTexture.width, CvType.CV_8UC1); // 180 * 240 * cv_8uc1
-        Utils.texture2DToMat(ImageNNFrontViewTexture, ImageMatrixNNfrontView);
+    //public void CollectPixelsValuesFromImageForNeuralNetworkDNNOfflineTraining() // NOT USING THIS
+    //{
+    //    Texture2D ImageNNFrontViewTexture = ToTexture2D(ImageNNFrontViewRT);
+    //    Mat ImageMatrixNNfrontView = new Mat(ImageNNFrontViewTexture.height, ImageNNFrontViewTexture.width, CvType.CV_8UC1); // 180 * 240 * cv_8uc1
+    //    Utils.texture2DToMat(ImageNNFrontViewTexture, ImageMatrixNNfrontView);
         
-        Imgproc.cvtColor(ImageMatrixNNfrontView, ImageMatrixNNfrontView, Imgproc.COLOR_RGB2GRAY);
-        string dataFromMatFrontView = ImageMatrixNNfrontView.reshape(1, 1).dump();
-        imageMatrixData.ImageNNFrontView = dataFromMatFrontView;
+    //    Imgproc.cvtColor(ImageMatrixNNfrontView, ImageMatrixNNfrontView, Imgproc.COLOR_RGB2GRAY);
+    //    string dataFromMatFrontView = ImageMatrixNNfrontView.reshape(1, 1).dump();
+    //    imageMatrixData.ImageNNFrontView = dataFromMatFrontView;
 
-        Texture2D ImageNNtopViewTexture = ToTexture2D(ImageNNtopViewRT);
-        Mat ImageMatrixNNtopView = new Mat(ImageNNtopViewTexture.height, ImageNNtopViewTexture.width, CvType.CV_8UC1); // 180 * 240 * cv_8uc1
-        Utils.texture2DToMat(ImageNNtopViewTexture, ImageMatrixNNtopView);
+    //    Texture2D ImageNNtopViewTexture = ToTexture2D(ImageNNtopViewRT);
+    //    Mat ImageMatrixNNtopView = new Mat(ImageNNtopViewTexture.height, ImageNNtopViewTexture.width, CvType.CV_8UC1); // 180 * 240 * cv_8uc1
+    //    Utils.texture2DToMat(ImageNNtopViewTexture, ImageMatrixNNtopView);
 
-        Imgproc.cvtColor(ImageMatrixNNtopView, ImageMatrixNNtopView, Imgproc.COLOR_RGB2GRAY);
-        string dataFromMatTopView = ImageMatrixNNtopView.reshape(1, 1).dump();
-        imageMatrixData.ImageNNtopView = dataFromMatTopView;
+    //    Imgproc.cvtColor(ImageMatrixNNtopView, ImageMatrixNNtopView, Imgproc.COLOR_RGB2GRAY);
+    //    string dataFromMatTopView = ImageMatrixNNtopView.reshape(1, 1).dump();
+    //    imageMatrixData.ImageNNtopView = dataFromMatTopView;
 
-    }
+    //}
 
 
     public byte[] CollectPNGFrontViewNN() // 20 x 20

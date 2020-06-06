@@ -1,17 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using OpenCVForUnity.CoreModule;
-using OpenCVForUnity.UnityUtils;
-using System.IO;
-using OpenCVForUnity.ImgprocModule;
+//using OpenCVForUnity.CoreModule;
+//using OpenCVForUnity.UnityUtils;
+//using System.IO;
+//using OpenCVForUnity.ImgprocModule;
 using System;
 //using UnityEngine.EventSystems;
 
 public class OpenCVManager : MonoBehaviour
 {
     public RenderTexture camRenderTexture;
-    public int ScaleFactorScreenBalance = 20;
+
+    //public int ScaleFactorScreenBalance = 20;
     public event Action<float> OnPixelsCountBalanceChanged;
 
 
@@ -20,11 +21,6 @@ public class OpenCVManager : MonoBehaviour
     public void CallForOpenCVCalculationUpdates()  /// call from EVENT
     {
         CallTOCalculateVisualScoreBalancePixelsCount(); // need to be called SCREEN so it makes more sense for the paper
-
-
-
-
-
     }
 
     private void CallTOCalculateVisualScoreBalancePixelsCount()
@@ -45,20 +41,22 @@ public class OpenCVManager : MonoBehaviour
 
     private void CalculateAreaLeftRightPixelsCountBalance(Texture2D srcTexture) 
     {
-        Mat imgMat = new Mat(srcTexture.height, srcTexture.width, CvType.CV_8UC1);
-        Utils.texture2DToMat(srcTexture, imgMat);
-        Imgproc.threshold(imgMat, imgMat, 1, 255, Imgproc.THRESH_BINARY);
+        //Mat imgMat = new Mat(srcTexture.height, srcTexture.width, CvType.CV_8UC1);
+        //Utils.texture2DToMat(srcTexture, imgMat);
+        //Imgproc.threshold(imgMat, imgMat, 1, 255, Imgproc.THRESH_BINARY);
 
-        Size sz = new Size((int) (srcTexture.height / ScaleFactorScreenBalance), (int)(srcTexture.width / ScaleFactorScreenBalance));
-        Imgproc.resize(imgMat, imgMat, sz);
+        //Size sz = new Size((int) (srcTexture.height / ScaleFactorScreenBalance), (int)(srcTexture.width / ScaleFactorScreenBalance));
+        //Imgproc.resize(imgMat, imgMat, sz);
 
-        int rows = imgMat.rows(); //Calculates number of rows
-        int cols = imgMat.cols(); //Calculates number of columns
-        int ch = imgMat.channels(); //Calculates number of channels (Grayscale: 1, RGB: 3, etc.)
+        //int rows = imgMat.rows(); //Calculates number of rows
+        //int cols = imgMat.cols(); //Calculates number of columns
+        //int ch = imgMat.channels(); //Calculates number of channels (Grayscale: 1, RGB: 3, etc.)
 
         //int totalPixelsCount = PixelCounting(imgMat, rows, 0, cols, ch);
-        int totalPixelsCountLeft = PixelCounting(imgMat, rows, 0, (int)cols/2, ch);
-        int totalPixelsCountRight = PixelCounting(imgMat, rows, (int)cols / 2 , cols, ch);
+        int totalPixelsCountLeft = PixelCounting(srcTexture, srcTexture.width, 0, (int)srcTexture.height/ 2, 3);
+        int totalPixelsCountRight = PixelCounting(srcTexture, srcTexture.width, (int)srcTexture.height / 2 , srcTexture.height, 3);
+
+
         float DifferenceBetweenLeftandRight = Mathf.Abs(totalPixelsCountLeft - totalPixelsCountRight);
         float visualScoreBalancePixelsCount = 1 - ((DifferenceBetweenLeftandRight) / (totalPixelsCountRight + totalPixelsCountLeft));
 
@@ -66,7 +64,7 @@ public class OpenCVManager : MonoBehaviour
             OnPixelsCountBalanceChanged(visualScoreBalancePixelsCount);
     }
 
-    private static int PixelCounting(Mat imgMat, int rows,int startCols, int cols, int ch)
+    private static int PixelCounting(Texture2D imgMat, int rows,int startCols, int cols, int ch)
     {
         int totalPixelsCount = 0;
 
@@ -74,7 +72,8 @@ public class OpenCVManager : MonoBehaviour
         {
             for (int j = startCols; j < cols; j++)
             {
-                double[] data = imgMat.get(i, j);
+                
+                Color data = imgMat.GetPixel(i, j);
                 for (int k = 0; k < ch; k++)
                 {
                     if ((float)data[k] > 0)
@@ -87,4 +86,6 @@ public class OpenCVManager : MonoBehaviour
 
         return totalPixelsCount;
     }
+
+    
 }

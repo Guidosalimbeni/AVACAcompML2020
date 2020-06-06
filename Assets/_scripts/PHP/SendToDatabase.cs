@@ -122,11 +122,11 @@ public class SendToDatabase : MonoBehaviour
             username = "Debugging";
         }
 
-        if (collectExtraStringImageData == true)
-        {
-            collectdatarendertexture.CollectPixelsValuesFromImageForMainViewRecordInDatabase(); // this update the scriptable object with the image string list pixels values
-            collectdatarendertexture.CollectPixelsValuesFromImageForNeuralNetworkDNNOfflineTraining(); // this also update the scriptable object
-        }
+        //if (collectExtraStringImageData == true)
+        //{
+        //    collectdatarendertexture.CollectPixelsValuesFromImageForMainViewRecordInDatabase(); // this update the scriptable object with the image string list pixels values
+        //    collectdatarendertexture.CollectPixelsValuesFromImageForNeuralNetworkDNNOfflineTraining(); // this also update the scriptable object
+        //}
 
         // I now use the blob which is faster and then in python I can open using the script in COmp Anlysis in Artist Supervision Project
         byte[] bytesFullViewPaintCam = collectdatarendertexture.CollectPNGMainPaintCameraFullResolution();

@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Unity.Barracuda;
-using OpenCVForUnity.CoreModule;
-using OpenCVForUnity.UnityUtils;
+//using OpenCVForUnity.CoreModule;
+//using OpenCVForUnity.UnityUtils;
 using System;
 
 public class BarracudaNNfromDatabase : MonoBehaviour
@@ -73,17 +73,7 @@ public class BarracudaNNfromDatabase : MonoBehaviour
         
     }
 
-    //private Texture2D Concat2Texture2D(RenderTexture front_Tex, RenderTexture top_Tex, int W, int H)
-    //{
-    //    Texture2D tex = new Texture2D(W, H, TextureFormat.RGB24, false);
-    //    RenderTexture.active = front_Tex;
-    //    tex.ReadPixels(new UnityEngine.Rect(0, 0, W/2, H), 0, 0);
-    //    tex.Apply();
-    //    RenderTexture.active = top_Tex;
-    //    tex.ReadPixels(new UnityEngine.Rect(0, 0, W/2, H), 0, 0);
-    //    tex.Apply();
-    //    return tex;
-    //}
+  
 
     private Texture2D Concat2Texture2D(RenderTexture front_Tex, RenderTexture top_Tex, int W, int H)
     {
@@ -128,7 +118,6 @@ public class BarracudaNNfromDatabase : MonoBehaviour
 
         return finaltex;
     }
-
 
 
     private Texture2D ToTexture2D(RenderTexture rTex)
