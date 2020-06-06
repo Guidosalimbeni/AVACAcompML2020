@@ -130,8 +130,11 @@ private void OnTriggerEnter(Collider other)
 
             }
 
-
-            FireScoreCalculation();
+            if (aI_Calculator_score.training)
+            {
+                FireScoreCalculation();
+            }
+            
         }
 
         
@@ -158,7 +161,7 @@ private void OnTriggerEnter(Collider other)
         if (scoreFinalOut > aI_Calculator_score.target)
         {
             SetReward(1f);
-            Debug.Log(" WINNNNNNIIIINNG");
+            //Debug.Log(" WINNNNNNIIIINNG");
             if (aI_Calculator_score.inferenceMode)
             {
                 targetReached = true;
@@ -169,9 +172,6 @@ private void OnTriggerEnter(Collider other)
                 EndEpisode(); 
                 targetReached = true;
             }
-            
-            
-
         }
 
         else
@@ -205,7 +205,7 @@ private void OnTriggerEnter(Collider other)
 
         if (scoreUnityVisual == 0)
         {
-            Debug.Log(" collision ");
+            //Debug.Log(" collision ");
             AddReward(-1/MaxStep);
             //EndEpisode(); // will make everything restarts
         }
@@ -214,7 +214,11 @@ private void OnTriggerEnter(Collider other)
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        AddReward(-1f / MaxStep);
+        if (aI_Calculator_score.training)
+        {
+            AddReward(-1f / MaxStep);
+        }
+        
         MoveAgent(vectorAction);
     }
 

@@ -80,7 +80,7 @@ namespace Lean.Touch
             ////Debug.Log("Finger " + finger.Index + " is still touching the screen");
         }
 
-        public void OnFingerUp(LeanFinger finger)
+        public void OnFingerUp(LeanFinger finger) ///
         {
 
             //Debug.Log("Finger " + finger.Index + " finished touching the screen");
@@ -88,7 +88,7 @@ namespace Lean.Touch
             openCVManager.CallForOpenCVCalculationUpdates();
             gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
 
-           
+
 
             barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
             barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();

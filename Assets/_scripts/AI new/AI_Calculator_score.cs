@@ -17,6 +17,7 @@ public class AI_Calculator_score : MonoBehaviour
     public bool movetotarget = true;
     public bool inferenceMode = false;
     public bool activateAllAgents = false;
+    public bool training = false;
 
 
 
@@ -41,7 +42,7 @@ public class AI_Calculator_score : MonoBehaviour
             barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
             barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
         }
-        
+
     }
-    
+
 }

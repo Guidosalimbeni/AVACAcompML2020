@@ -5,16 +5,19 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/01_Start.unity
     guid: dc290c84ac1e7834391ee5256a12ffb6
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/02_selection.unity
     guid: b32753dd4e0238944863642a3d1823df
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/03_Main_Genetic_Algorithm.unity
     guid: 8132d362124d5074e86cf1ce1c1afc44
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/_scenes/08_games_of_composition_float_training.unity
+    guid: 931f43f7ac5e4454fb6a5ff12266c43e
   m_configObjects: {}
