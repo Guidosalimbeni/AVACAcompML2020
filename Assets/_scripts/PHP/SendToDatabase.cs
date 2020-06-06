@@ -21,7 +21,7 @@ public class SendToDatabase : MonoBehaviour
     private List<GameObject> listOfelementsInComposition;
     private List<float> ListOfInfoForDatabase;
     private float scorePixelsBalance;
-    private float scoreBoundsBalance;
+    //private float scoreBoundsBalance;
     private float scoreUnityVisual;
     private string genesString;
     private int numberOfItems;
@@ -55,7 +55,7 @@ public class SendToDatabase : MonoBehaviour
     {
         UpdateActualListOfInfoForDatabase();
 
-        scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
+        //scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
         scoreUnityVisual = scoreCalculator.scoreUnityVisual;
         scorePixelsBalance = scoreCalculator.visualScoreBalancePixelsCount;
         scoreLawOfLever = scoreCalculator.scoreLawOfLever;
@@ -76,7 +76,7 @@ public class SendToDatabase : MonoBehaviour
     {
         UpdateActualListOfInfoForDatabase();
 
-        scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
+        //scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
         scoreUnityVisual = scoreCalculator.scoreUnityVisual;
         scorePixelsBalance = scoreCalculator.visualScoreBalancePixelsCount;
         scoreLawOfLever = scoreCalculator.scoreLawOfLever;
@@ -98,7 +98,7 @@ public class SendToDatabase : MonoBehaviour
     {
         UpdateActualListOfInfoForDatabase();
 
-        scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
+        //scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
         scoreUnityVisual = scoreCalculator.scoreUnityVisual;
         scorePixelsBalance = scoreCalculator.visualScoreBalancePixelsCount;
         scoreLawOfLever = scoreCalculator.scoreLawOfLever;
@@ -140,7 +140,7 @@ public class SendToDatabase : MonoBehaviour
         form.AddField("numberOfItems", numberOfItems.ToString()); //
         form.AddField("sequence", sequence); // 
         form.AddField("genesString", genesString);
-        form.AddField("scoreBoundsBalance", scoreBoundsBalance.ToString());
+        //form.AddField("scoreBoundsBalance", scoreBoundsBalance.ToString());
         form.AddField("scorePixelsBalance", scorePixelsBalance.ToString());
         form.AddField("scoreUnityVisual", scoreUnityVisual.ToString());
         form.AddField("scoreLawOfLever", scoreLawOfLever.ToString());

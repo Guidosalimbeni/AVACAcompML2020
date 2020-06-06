@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 //using MLAgents;
 using Unity.Barracuda;
-using OpenCVForUnity.CoreModule;
-using OpenCVForUnity.ImgprocModule;
-using OpenCVForUnity.UnityUtils;
+//using OpenCVForUnity.CoreModule;
+//using OpenCVForUnity.ImgprocModule;
+//using OpenCVForUnity.UnityUtils;
 using System;
 
 
@@ -22,12 +22,12 @@ public class BarracudaCNNModel : MonoBehaviour
     public int H = 64;
 
     private IWorker worker;
-    private Texture2D normTxt;
+    //private Texture2D normTxt;
     private float ScoreFromBarracudaCNN;
 
     private void Start()
     {
-        normTxt = new Texture2D(W, H, TextureFormat.RGB24, false);
+        //normTxt = new Texture2D(W, H, TextureFormat.RGB24, false);
         var model = ModelLoader.Load(modelSource);
         //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
         worker = WorkerFactory.CreateWorker(model);
@@ -38,11 +38,21 @@ public class BarracudaCNNModel : MonoBehaviour
     public void CallTOCalculateBarracudaCNNScore()
     {
         // previously CallTOCalculateMobileNetScore
-        Texture2D m_Texture = ToTexture2DAndResize(camRenderTexture, W, H);
+        //Texture2D m_Texture = ToTexture2DAndResize(camRenderTexture, W, H);
+        Texture2D m_Texture = ToTexture2D(camRenderTexture);
         UseTexture(m_Texture);
     }
 
-    
+    private Texture2D ToTexture2D(RenderTexture rTex)
+    {
+        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGBA32, false);
+        RenderTexture.active = rTex;
+        tex.ReadPixels(new UnityEngine.Rect(0, 0, rTex.width, rTex.height), 0, 0);
+        tex.Apply();
+        return tex;
+    }
+
+
     private void UseTexture(Texture2D input)
     {
         Tensor tensor = new Tensor(input);
@@ -77,50 +87,50 @@ public class BarracudaCNNModel : MonoBehaviour
         }
     }
 
-    private Texture2D ToTexture2DAndResize(RenderTexture rTex, int W, int H)
-    {
-        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false); //RGBA32
-        RenderTexture.active = rTex;
-        tex.ReadPixels(new UnityEngine.Rect(0, 0, rTex.width, rTex.height), 0, 0);
-        tex.Apply();
+    //private Texture2D ToTexture2DAndResize(RenderTexture rTex, int W, int H)
+    //{
+    //    Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false); //RGBA32
+    //    RenderTexture.active = rTex;
+    //    tex.ReadPixels(new UnityEngine.Rect(0, 0, rTex.width, rTex.height), 0, 0);
+    //    tex.Apply();
 
-        Mat imgMat = new Mat(tex.height, tex.width, CvType.CV_8UC3); 
-        Utils.texture2DToMat(tex, imgMat);
+    //    Mat imgMat = new Mat(tex.height, tex.width, CvType.CV_8UC3); 
+    //    Utils.texture2DToMat(tex, imgMat);
 
-        Size scaleSize = new Size(W, H);
-        Imgproc.resize(imgMat, imgMat, scaleSize, 0, 0, interpolation: Imgproc.INTER_AREA);
+    //    Size scaleSize = new Size(W, H);
+    //    Imgproc.resize(imgMat, imgMat, scaleSize, 0, 0, interpolation: Imgproc.INTER_AREA);
         
-        Texture2D resizedImg = new Texture2D(W, H, TextureFormat.RGB24, false); 
-        Utils.matToTexture2D(imgMat, resizedImg);
+    //    Texture2D resizedImg = new Texture2D(W, H, TextureFormat.RGB24, false); 
+    //    Utils.matToTexture2D(imgMat, resizedImg);
 
-        return resizedImg;
+    //    return resizedImg;
 
-    }
+    //}
 
 
     // NOT USED since the values are already from 0 to 1
-    private Texture2D NormalisedInputTexture(Texture2D texture)
-    {
+    //private Texture2D NormalisedInputTexture(Texture2D texture)
+    //{
         
-        //plane.GetComponent<Renderer>().material.mainTexture = normTxt;
+    //    //plane.GetComponent<Renderer>().material.mainTexture = normTxt;
 
-        for (int y = 0; y < texture.height; y++)
-        {
-            for (int x = 0; x < texture.width; x++)
-            {
-                Color newColor;
-                float r = texture.GetPixel(x,y).r * 255;
-                float g = texture.GetPixel(x, y).g * 255;
-                float b = texture.GetPixel(x, y).b * 255;
+    //    for (int y = 0; y < texture.height; y++)
+    //    {
+    //        for (int x = 0; x < texture.width; x++)
+    //        {
+    //            Color newColor;
+    //            float r = texture.GetPixel(x,y).r * 255;
+    //            float g = texture.GetPixel(x, y).g * 255;
+    //            float b = texture.GetPixel(x, y).b * 255;
                 
-                newColor = new Color((r - 127.5f) / 127.5f, (g - 127.5f) / 127.5f, (b - 127.5f) / 127.5f);
+    //            newColor = new Color((r - 127.5f) / 127.5f, (g - 127.5f) / 127.5f, (b - 127.5f) / 127.5f);
                 
-                normTxt.SetPixel(x, y, newColor);
-            }
-        }
-        normTxt.Apply();
+    //            normTxt.SetPixel(x, y, newColor);
+    //        }
+    //    }
+    //    normTxt.Apply();
 
-        return normTxt;
-    }
+    //    return normTxt;
+    //}
 
 }
