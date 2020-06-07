@@ -45,6 +45,9 @@ public class GamePopulationController : MonoBehaviour
         }
     }
 
+    
+
+
     private void SetLayerToForeground()
     {
         foreach (var item in ElementsCompositions)

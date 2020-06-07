@@ -16,7 +16,7 @@ public class AI_Calculator_score : MonoBehaviour
     private int frames = 0;
     public bool movetotarget = true;
     public bool inferenceMode = false;
-    public bool activateAllAgents = false;
+    
     public bool buttonRunRobot = false; // turn into property
 
     private void Awake()
@@ -28,6 +28,7 @@ public class AI_Calculator_score : MonoBehaviour
         barracudaOpenCvFeature = FindObjectOfType<BarracudaOpenCvFeature>();
         barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
     }
+
     private void FixedUpdate()
     {
 
@@ -48,23 +49,60 @@ public class AI_Calculator_score : MonoBehaviour
 
         else
         {
-            if (buttonRunRobot)
+            
+            frames++;
+
+            if (frames % steps == 0)
             {
-                frames++;
-
-                if (frames % steps == 0)
-                {
-                    openCVManager.CallForOpenCVCalculationUpdates(); // 1
-                    gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
-                    barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
-                    barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-                    barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-                    barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
-                }
-
+                openCVManager.CallForOpenCVCalculationUpdates(); // 1
+                gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+                //barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+                barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+                //barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+                //barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
             }
+
+            
         }
 
     }
+    //private void FixedUpdate()
+    //{
+
+    //    if (inferenceMode == false)
+    //    {
+    //        frames++;
+
+    //        if (frames % steps == 0)
+    //        {
+    //            openCVManager.CallForOpenCVCalculationUpdates(); // 1
+    //            gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+    //            barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+    //            barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+    //            barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+    //            barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+    //        }
+    //    }
+
+    //    else
+    //    {
+    //        if (buttonRunRobot)
+    //        {
+    //            frames++;
+
+    //            if (frames % steps == 0)
+    //            {
+    //                openCVManager.CallForOpenCVCalculationUpdates(); // 1
+    //                gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+    //                barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+    //                barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+    //                barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+    //                barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+    //            }
+
+    //        }
+    //    }
+
+    //}
 
 }

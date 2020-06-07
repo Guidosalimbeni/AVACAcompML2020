@@ -7,17 +7,28 @@ public class AcavaAcademy : MonoBehaviour
 {
 
     public GameObject[] elementsOfAiComposition;
-    private Comp_agent_float[] agents;
+    
+
+    private GamePopulationController GamePopulationController;
+    private int NumberOfAgentsInScene;
+    private int count = 0;
 
     private void Awake()
     {
-        agents = FindObjectsOfType<Comp_agent_float>();
-        //populateScene();
         
+        GamePopulationController = FindObjectOfType<GamePopulationController>();
+
+        Comp_agent_float[] agents = FindObjectsOfType<Comp_agent_float>();
+        NumberOfAgentsInScene = agents.Length;
+
+
     }
+
+    
 
     public void EnvironmentReset(Comp_agent_float agent)
     {
+        
 
         TagMeElementOfComposition elem = agent.GetComponentInChildren<TagMeElementOfComposition>();
         
@@ -25,20 +36,61 @@ public class AcavaAcademy : MonoBehaviour
         {
             GameObject itemGO = elem.gameObject;
             Destroy(itemGO);
-            Debug.Log(" I am here ");
+            
         }
-        
 
-        Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.2f, 1.2f), 0f, UnityEngine.Random.Range(-1.5f, 1.5f));
-        var spawnRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+
+        //Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0f, UnityEngine.Random.Range(-1.0f, 1.0f));
+        //var spawnRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+
+        Vector3 spawnLocation = new Vector3(0f, 0f, 0f);
+        var spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
         GameObject item = Instantiate(elementsOfAiComposition[Random.Range(0, elementsOfAiComposition.Length)], spawnLocation, spawnRotation);
         GameObject Parent = agent.gameObject;
         item.transform.parent = Parent.transform;
 
-
-        Debug.Log(" I am resetting academy");
+        
     }
 
-    
+
+    //void EnviromentElementsOfComposition()
+    //{
+        
+
+    //    if (count == NumberOfAgentsInScene)
+    //    {
+    //        Debug.Log(" I am the academy");
+    //        PopulateTheElementsOfCompositionInTheSceneFromAcademy();
+    //        count = 0;
+    //    }
+
+    //}
+
+
+    //private void PopulateTheElementsOfCompositionInTheSceneFromAcademy()
+    //{
+
+    //    GamePopulationController.ElementsCompositions.Clear();
+
+    //    TagMeElementOfComposition[] elementstags = FindObjectsOfType<TagMeElementOfComposition>();
+    //    foreach (var elementtag in elementstags)
+    //    {
+    //        GameObject go = elementtag.gameObject;
+    //        Debug.Log(go.name + "   NumberOfAgentsInScene");
+    //        GamePopulationController.ElementsCompositions.Add(go);
+    //    }
+
+    //    SetLayerToForeground();
+    //}
+
+    //private void SetLayerToForeground()
+    //{
+    //    foreach (var item in GamePopulationController.ElementsCompositions)
+    //    {
+    //        item.layer = 9; // set layer to Foreground
+    //    }
+    //}
+
+
 }

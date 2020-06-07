@@ -21,7 +21,7 @@ public class RunAIRobotOnSelected : MonoBehaviour
             if (lean.IsSelected)
             {
                 Comp_agent_float agent = items[i].GetComponent<Comp_agent_float>();
-                agent.agentActive = !agent.agentActive;
+                
                 agent.enabled = !agent.enabled;
                 AI_Calculator_score.buttonRunRobot = !AI_Calculator_score.buttonRunRobot;
             }
@@ -37,7 +37,7 @@ public class RunAIRobotOnSelected : MonoBehaviour
             if (lean.IsSelected)
             {
                 Comp_agent_float agent = items[i].GetComponent<Comp_agent_float>();
-                agent.agentActive = false;
+                
 
             }
         }

@@ -6,13 +6,11 @@ using System;
 
 public class Comp_agent_float : Agent
 {
-    public bool agentActive = false;
+    
     public bool useVectorObs;
 
     public float speed = 1.0f;
     
-    public int massOfObject = 1;
-    public float HeightOfObject = 1;
 
     private ScoreCalculator scoreCalculator;
     private AI_Calculator_score aI_Calculator_score;
@@ -22,6 +20,9 @@ public class Comp_agent_float : Agent
     private Camera cameraTop;
     public Transform centerPoint;
     private AcavaAcademy acavaAcademy;
+    private GamePopulationController gamePopulationController;
+
+    float a = 0.0f;
 
     private void Awake()
     {
@@ -29,10 +30,8 @@ public class Comp_agent_float : Agent
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
         aI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         acavaAcademy = FindObjectOfType<AcavaAcademy>();
-        if (aI_Calculator_score.activateAllAgents)
-        {
-            agentActive = true;
-        }
+        gamePopulationController = FindObjectOfType<GamePopulationController>();
+        
 
         cameraPaint = Camera.main;
         cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
@@ -64,8 +63,9 @@ private void OnTriggerEnter(Collider other)
             if (other.gameObject.tag == "bounds")
             {
                 Debug.Log(" out of table");
-                SetReward(-1f);
-                EndEpisode();
+                
+                AddReward(-1 / MaxStep);
+
             }
         }
     }
@@ -77,9 +77,9 @@ private void OnTriggerEnter(Collider other)
         {
             //sensor.AddObservation(StepCount / (float)MaxStep);
             sensor.AddObservation(gameObject.transform.rotation.y);
+            sensor.AddObservation(gameObject.transform.position);
             sensor.AddObservation(centerPoint.transform.position - gameObject.transform.position);
-            sensor.AddObservation(HeightOfObject);
-            sensor.AddObservation(massOfObject);
+            
         }
     }
 
@@ -132,13 +132,28 @@ private void OnTriggerEnter(Collider other)
 
     private void FireScoreCalculation()
     {
-        float scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
+        //float scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
         //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
         float scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
-        //float scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
+        float scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
         //float scoreMobileNet = scoreCalculator.scoreMobileNet;
-        //float scoreAllscorefeatures = scoreCalculator.scoreAllscorefeatures;
+        //float scoreAllscorefeatures = scoreCalculator.scoreAllscorefeatures;  // to simplify but to remove when retrained images
 
+        float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
+        //float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
+        //float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
+
+        float scoreFinalOut = (scoreNNFrontTop + visualScoreBalancePixelsCount) / 2;
+
+        
+        if (scoreFinalOut > a)
+        {
+            //Debug.Log(scoreFinalOut);
+            //Debug.Log("scoreFinalOut");
+            a = scoreFinalOut;
+        }
+
+        
 
         if (scoreFinalOut > aI_Calculator_score.target)
         {
@@ -147,7 +162,7 @@ private void OnTriggerEnter(Collider other)
             if (aI_Calculator_score.inferenceMode)
             {
                 targetReached = true;
-                agentActive = false;
+                
             }
             else
             {
@@ -166,8 +181,9 @@ private void OnTriggerEnter(Collider other)
 
         if (scoreUnityVisual == 0)
         {
-            //Debug.Log(" collision ");
-            AddReward(-1 / MaxStep);
+            Debug.Log(" collision ");
+            if (aI_Calculator_score.inferenceMode == false)
+                AddReward(-1 / MaxStep);
             //EndEpisode(); // will make everything restarts
         }
 
@@ -175,23 +191,24 @@ private void OnTriggerEnter(Collider other)
 
     public override void OnActionReceived(float[] vectorAction)
     {
-        if (agentActive)
-        {
-
+        if (aI_Calculator_score.inferenceMode == false)
             AddReward(-1f / MaxStep);
-            MoveAgent(vectorAction);
-            Debug.Log("receveid action");
-        }
-
-
+        MoveAgent(vectorAction);
     }
 
 
     public override void OnEpisodeBegin()
     {
+        a = 0.0f;
+
+
+
         //transform.position = new Vector3(UnityEngine.Random.Range(-1.2f, 1.2f), 0f, UnityEngine.Random.Range(-1.5f, 1.5f));
         //transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
-        acavaAcademy.EnvironmentReset(this);
+
+
+        if (targetReached == false)
+            acavaAcademy.EnvironmentReset(this);
     }
 
     //public override void Heuristic(float[] actionsOut)
