@@ -45,7 +45,7 @@ public class BarracudaCNNModel : MonoBehaviour
 
     private Texture2D ToTexture2D(RenderTexture rTex)
     {
-        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGBA32, false);
+        Texture2D tex = new Texture2D(rTex.width, rTex.height, TextureFormat.RGB24, false);
         RenderTexture.active = rTex;
         tex.ReadPixels(new UnityEngine.Rect(0, 0, rTex.width, rTex.height), 0, 0);
         tex.Apply();
@@ -79,7 +79,7 @@ public class BarracudaCNNModel : MonoBehaviour
         ScoreFromBarracudaCNN = O[0,0,0,1];
 
         //O.Dispose();
-        
+        tensor.Dispose();
 
         if (OnScorescoreMobileNetChanged != null)
         {

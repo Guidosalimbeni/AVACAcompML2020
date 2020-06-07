@@ -70,7 +70,7 @@ public class BarracudaNNfromDatabase : MonoBehaviour
         }
 
         //O.Dispose();
-        
+        tensor.Dispose();
     }
 
   

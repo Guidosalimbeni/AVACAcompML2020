@@ -14,18 +14,25 @@ public class DataForNeuralNetwork : ScriptableObject
 #pragma warning disable CS0108
     [SerializeField]
     private string name;
+#pragma warning disable CS0649
     [SerializeField]
     private float g0;
+#pragma warning disable CS0649
     [SerializeField]
     private float g1;
+#pragma warning disable CS0649
     [SerializeField]
     private float g2;
+#pragma warning disable CS0649
     [SerializeField]
     private float g3;
+#pragma warning disable CS0649
     [SerializeField]
     private float g4;
+#pragma warning disable CS0649
     [SerializeField]
     private float g5;
+#pragma warning disable CS0649
     [SerializeField]
     private int judge;
 

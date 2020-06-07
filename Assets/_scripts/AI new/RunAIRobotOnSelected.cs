@@ -5,7 +5,12 @@ using UnityEngine;
 
 public class RunAIRobotOnSelected : MonoBehaviour
 {
-    private int countClic = 0;
+    private AI_Calculator_score AI_Calculator_score;
+
+    private void Awake()
+    {
+        AI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
+    }
     public void InferenceOnSelected()
     {
         TagMeElementOfComposition[] items = FindObjectsOfType<TagMeElementOfComposition>();
@@ -16,8 +21,9 @@ public class RunAIRobotOnSelected : MonoBehaviour
             if (lean.IsSelected)
             {
                 Comp_agent_float agent = items[i].GetComponent<Comp_agent_float>();
-                agent.agentActive = true;
-
+                agent.agentActive = !agent.agentActive;
+                agent.enabled = !agent.enabled;
+                AI_Calculator_score.buttonRunRobot = !AI_Calculator_score.buttonRunRobot;
             }
         }
     }

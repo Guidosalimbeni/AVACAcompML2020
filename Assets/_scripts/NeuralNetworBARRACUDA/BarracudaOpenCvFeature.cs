@@ -62,6 +62,8 @@ public class BarracudaOpenCvFeature : MonoBehaviour
         }
 
         //O.Dispose();
-        
+        tensor.Dispose();
+
+
     }
 }

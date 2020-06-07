@@ -58,6 +58,8 @@ public class BarracudaFinalOut : MonoBehaviour
         }
 
         //O.Dispose();
-       
+        tensor.Dispose();
+
+
     }
 }

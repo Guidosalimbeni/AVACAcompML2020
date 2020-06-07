@@ -11,15 +11,13 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaOpenCvFeature barracudaOpenCvFeature;
     private BarracudaFinalOut barracudaFinalOut;
 
-    public int steps = 10;
+    public int steps = 6;
     public float target = 0.95f;
     private int frames = 0;
     public bool movetotarget = true;
     public bool inferenceMode = false;
     public bool activateAllAgents = false;
-    public bool training = false;
-
-
+    public bool buttonRunRobot = false; // turn into property
 
     private void Awake()
     {
@@ -32,15 +30,39 @@ public class AI_Calculator_score : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        frames++;
-        if (frames % steps == 0)
+
+        if (inferenceMode == false)
         {
-            openCVManager.CallForOpenCVCalculationUpdates(); // 1
-            gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
-            barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
-            barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-            barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-            barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+            frames++;
+
+            if (frames % steps == 0)
+            {
+                openCVManager.CallForOpenCVCalculationUpdates(); // 1
+                gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+                barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+                barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+                barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+                barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+            }
+        }
+
+        else
+        {
+            if (buttonRunRobot)
+            {
+                frames++;
+
+                if (frames % steps == 0)
+                {
+                    openCVManager.CallForOpenCVCalculationUpdates(); // 1
+                    gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+                    barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+                    barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+                    barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+                    barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+                }
+
+            }
         }
 
     }

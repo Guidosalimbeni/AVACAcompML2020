@@ -22,6 +22,7 @@ public class ReplaceWithPrefab : EditorWindow
             for (var i = selection.Length - 1; i >= 0; --i)
             {
                 var selected = selection[i];
+#pragma warning disable CS0618
                 var prefabType = PrefabUtility.GetPrefabType(prefab);
                 GameObject newObject;
 

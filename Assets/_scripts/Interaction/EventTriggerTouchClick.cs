@@ -88,14 +88,10 @@ namespace Lean.Touch
             openCVManager.CallForOpenCVCalculationUpdates();
             gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores();
 
-
-
             barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
             barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
             barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
             barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
-
-
         }
 
         public void OnFingerTap(LeanFinger finger)

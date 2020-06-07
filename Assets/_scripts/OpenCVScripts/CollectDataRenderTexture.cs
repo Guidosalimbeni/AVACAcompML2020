@@ -12,13 +12,13 @@ public class CollectDataRenderTexture: MonoBehaviour
 
     public ImageMatrixData imageMatrixData;
     public float resizefactorMainCam = 10.0f;
-    [SerializeField]
-    private RenderTexture CompositionRenderTexture; // 240 * 180  // mobile net works with 224, 224
+    
+    public RenderTexture CompositionRenderTexture; // 240 * 180  // mobile net works with 224, 224
     //private OpenCVManager opencvmanager;
-    [SerializeField]
-    private RenderTexture ImageNNFrontViewRT; // 20 x 20
-    [SerializeField]
-    private RenderTexture ImageNNtopViewRT; // 20 x 20
+   
+    public RenderTexture ImageNNFrontViewRT; // 20 x 20
+    
+    public RenderTexture ImageNNtopViewRT; // 20 x 20
 
     private void Awake()
     {
