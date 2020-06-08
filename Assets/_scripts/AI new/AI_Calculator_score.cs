@@ -38,7 +38,7 @@ public class AI_Calculator_score : MonoBehaviour
 
             if (frames % steps == 0)
             {
-                openCVManager.CallForOpenCVCalculationUpdates(); // 1
+                openCVManager.CallForOpenCVCalculationUpdates(); // 1 pixel count
                 gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
                 barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
                 barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();

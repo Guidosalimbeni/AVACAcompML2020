@@ -482,7 +482,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 200
+  MaxStep: 4000
   useVectorObs: 1
   speed: 10
   centerPoint: {fileID: 360147907}
@@ -2287,7 +2287,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 200
+  MaxStep: 4000
   useVectorObs: 1
   speed: 10
   centerPoint: {fileID: 412837007}
@@ -9735,7 +9735,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 200
+  MaxStep: 4000
   useVectorObs: 1
   speed: 10
   centerPoint: {fileID: 3896291326379311663}

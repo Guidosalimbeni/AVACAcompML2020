@@ -132,18 +132,18 @@ private void OnTriggerEnter(Collider other)
 
     private void FireScoreCalculation()
     {
-        //float scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
+        float scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
         //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
         float scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
-        float scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
+        //float scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
         //float scoreMobileNet = scoreCalculator.scoreMobileNet;
         //float scoreAllscorefeatures = scoreCalculator.scoreAllscorefeatures;  // to simplify but to remove when retrained images
 
-        float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
+        //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
         //float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
         //float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
 
-        float scoreFinalOut = (scoreNNFrontTop + visualScoreBalancePixelsCount) / 2;
+        //float scoreFinalOut = (scoreNNFrontTop + visualScoreBalancePixelsCount) / 2;
 
         
         if (scoreFinalOut > a)
@@ -153,6 +153,7 @@ private void OnTriggerEnter(Collider other)
             a = scoreFinalOut;
         }
 
+        Debug.Log(a);
         
 
         if (scoreFinalOut > aI_Calculator_score.target)

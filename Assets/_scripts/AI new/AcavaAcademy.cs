@@ -10,6 +10,7 @@ public class AcavaAcademy : MonoBehaviour
     private List <GameObject> itemToPassForCalculation;
 
     private GamePopulationController GamePopulationController;
+    private CalculateCollisionDistanceVisualUnity CalculateCollisionDistanceVisualUnity;
     private int NumberOfAgentsInScene;
     private int count = 0;
 
@@ -17,7 +18,7 @@ public class AcavaAcademy : MonoBehaviour
     {
         
         GamePopulationController = FindObjectOfType<GamePopulationController>();
-
+        CalculateCollisionDistanceVisualUnity = FindObjectOfType<CalculateCollisionDistanceVisualUnity>();
         Comp_agent_float[] agents = FindObjectsOfType<Comp_agent_float>();
         NumberOfAgentsInScene = agents.Length;
         itemToPassForCalculation = new List<GameObject>();
@@ -62,6 +63,8 @@ public class AcavaAcademy : MonoBehaviour
     {
 
         GamePopulationController.ElementsCompositions = itemToPassForCalculation;
+
+        CalculateCollisionDistanceVisualUnity.UpdatePairWiseElementForVisualUnityScoreFromAIAcademy();
 
         SetLayerToForeground();
     }

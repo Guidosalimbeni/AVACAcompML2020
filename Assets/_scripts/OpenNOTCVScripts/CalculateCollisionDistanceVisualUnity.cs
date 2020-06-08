@@ -50,6 +50,12 @@ public class CalculateCollisionDistanceVisualUnity : MonoBehaviour
         
     }
     
+    public void UpdatePairWiseElementForVisualUnityScoreFromAIAcademy()
+    {
+
+        PairwaiseElementsOfComposition = PairwaiseOperation(gamePopulationController.ElementsCompositions);
+    }
+
     public float CalculateUnityVisualScoreAndDrawLine()
     {
         VisualUnityScore = DrawAndCalculateDistances(PairwaiseElementsOfComposition);
