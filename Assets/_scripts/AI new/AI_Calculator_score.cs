@@ -17,7 +17,8 @@ public class AI_Calculator_score : MonoBehaviour
     public bool movetotarget = true;
     public bool inferenceMode = false;
     
-    public bool buttonRunRobot = false; // turn into property
+   
+    public bool buttonRunRobot { get; set; }
 
     private void Awake()
     {
@@ -56,13 +57,13 @@ public class AI_Calculator_score : MonoBehaviour
             {
                 openCVManager.CallForOpenCVCalculationUpdates(); // 1
                 gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
-                //barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+                barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
                 barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-                //barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-                //barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+                barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+                barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
             }
 
-            
+
         }
 
     }

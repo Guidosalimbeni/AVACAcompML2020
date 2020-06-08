@@ -17,9 +17,9 @@ GameObject:
   - component: {fileID: 245275664825782361}
   - component: {fileID: 8359266621685719818}
   - component: {fileID: 8454286431689479500}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: jar
-  m_TagString: Untagged
+  m_TagString: ItemsInComposition
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

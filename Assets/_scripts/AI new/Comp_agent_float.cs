@@ -8,10 +8,8 @@ public class Comp_agent_float : Agent
 {
     
     public bool useVectorObs;
-
-    public float speed = 1.0f;
-    
-
+    public float speed = 10.0f;
+    public bool webtraining = false;
     private ScoreCalculator scoreCalculator;
     private AI_Calculator_score aI_Calculator_score;
     private bool targetReached = false;
@@ -20,7 +18,8 @@ public class Comp_agent_float : Agent
     private Camera cameraTop;
     public Transform centerPoint;
     private AcavaAcademy acavaAcademy;
-    private GamePopulationController gamePopulationController;
+    private float scoreFinalOut;
+    private float scoreUnityVisual;
 
     float a = 0.0f;
 
@@ -30,27 +29,30 @@ public class Comp_agent_float : Agent
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
         aI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         acavaAcademy = FindObjectOfType<AcavaAcademy>();
-        gamePopulationController = FindObjectOfType<GamePopulationController>();
         
-
-        cameraPaint = Camera.main;
-        cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
-
-        CameraSensorComponent[] camerasensors = gameObject.GetComponents<CameraSensorComponent>();
-
-        for (int i = 0; i < camerasensors.Length; i++)
+        
+        if (webtraining == false)
         {
-        
-            if (camerasensors[i].SensorName == "CameraPaint")
-            {
-                camerasensors[i].Camera = cameraPaint;
-            }
+            cameraPaint = Camera.main;
+            cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
 
-            if (camerasensors[i].SensorName == "CameraSensor")
+            CameraSensorComponent[] camerasensors = gameObject.GetComponents<CameraSensorComponent>();
+
+            for (int i = 0; i < camerasensors.Length; i++)
             {
-                camerasensors[i].Camera = cameraTop;
+
+                if (camerasensors[i].SensorName == "CameraPaint")
+                {
+                    camerasensors[i].Camera = cameraPaint;
+                }
+
+                if (camerasensors[i].SensorName == "CameraSensor")
+                {
+                    camerasensors[i].Camera = cameraTop;
+                }
             }
         }
+        
 
     }
 
@@ -132,34 +134,44 @@ private void OnTriggerEnter(Collider other)
 
     private void FireScoreCalculation()
     {
-        float scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
-        //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
-        float scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
-        //float scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
-        //float scoreMobileNet = scoreCalculator.scoreMobileNet;
-        //float scoreAllscorefeatures = scoreCalculator.scoreAllscorefeatures;  // to simplify but to remove when retrained images
-
-        //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
-        //float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
-        //float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
-
-        //float scoreFinalOut = (scoreNNFrontTop + visualScoreBalancePixelsCount) / 2;
-
         
-        if (scoreFinalOut > a)
+        
+        
+        
+
+        if (aI_Calculator_score.inferenceMode == false)
         {
-            //Debug.Log(scoreFinalOut);
-            //Debug.Log("scoreFinalOut");
-            a = scoreFinalOut;
+            scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
+            scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
+
+
+
+            if (scoreFinalOut > a)
+            {
+                Debug.Log(scoreFinalOut);
+                a = scoreFinalOut;
+            }
         }
 
-        Debug.Log(a);
+        else
+        {
+            scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
+
+
+            float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
+            float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
+            float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
+
+            scoreFinalOut = (scoreUnityVisual + visualScoreBalancePixelsCount + scoreLawOfLever + scoreIsolationBalance) / 4;
+        }
+            
+
+        //Debug.Log(a);
         
 
         if (scoreFinalOut > aI_Calculator_score.target)
         {
             
-            Debug.Log(" WINNNNNNIIIINNG");
             if (aI_Calculator_score.inferenceMode)
             {
                 targetReached = true;
@@ -167,10 +179,9 @@ private void OnTriggerEnter(Collider other)
             }
             else
             {
+                Debug.Log(" WINNNNNNIIIINNG");
                 SetReward(1f);
-                
                 EndEpisode(); 
-                //targetReached = true;
             }
         }
 
@@ -182,7 +193,6 @@ private void OnTriggerEnter(Collider other)
 
         if (scoreUnityVisual == 0)
         {
-            Debug.Log(" collision ");
             if (aI_Calculator_score.inferenceMode == false)
                 AddReward(-1 / MaxStep);
             //EndEpisode(); // will make everything restarts
