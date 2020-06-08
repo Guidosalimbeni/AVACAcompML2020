@@ -7,7 +7,7 @@ public class AcavaAcademy : MonoBehaviour
 {
 
     public GameObject[] elementsOfAiComposition;
-    
+    private List <GameObject> itemToPassForCalculation;
 
     private GamePopulationController GamePopulationController;
     private int NumberOfAgentsInScene;
@@ -20,15 +20,13 @@ public class AcavaAcademy : MonoBehaviour
 
         Comp_agent_float[] agents = FindObjectsOfType<Comp_agent_float>();
         NumberOfAgentsInScene = agents.Length;
-
-
+        itemToPassForCalculation = new List<GameObject>();
     }
 
-    
 
     public void EnvironmentReset(Comp_agent_float agent)
     {
-        
+
 
         TagMeElementOfComposition elem = agent.GetComponentInChildren<TagMeElementOfComposition>();
         
@@ -50,47 +48,31 @@ public class AcavaAcademy : MonoBehaviour
         GameObject Parent = agent.gameObject;
         item.transform.parent = Parent.transform;
 
-        
+        itemToPassForCalculation.Add(item);
+        if (itemToPassForCalculation.Count > NumberOfAgentsInScene)
+        {
+            itemToPassForCalculation.RemoveAt(0);
+        }
+
+        PopulateTheElementsOfCompositionInTheSceneFromAcademy();
     }
 
 
-    //void EnviromentElementsOfComposition()
-    //{
-        
+    private void PopulateTheElementsOfCompositionInTheSceneFromAcademy()
+    {
 
-    //    if (count == NumberOfAgentsInScene)
-    //    {
-    //        Debug.Log(" I am the academy");
-    //        PopulateTheElementsOfCompositionInTheSceneFromAcademy();
-    //        count = 0;
-    //    }
+        GamePopulationController.ElementsCompositions = itemToPassForCalculation;
 
-    //}
+        SetLayerToForeground();
+    }
 
-
-    //private void PopulateTheElementsOfCompositionInTheSceneFromAcademy()
-    //{
-
-    //    GamePopulationController.ElementsCompositions.Clear();
-
-    //    TagMeElementOfComposition[] elementstags = FindObjectsOfType<TagMeElementOfComposition>();
-    //    foreach (var elementtag in elementstags)
-    //    {
-    //        GameObject go = elementtag.gameObject;
-    //        Debug.Log(go.name + "   NumberOfAgentsInScene");
-    //        GamePopulationController.ElementsCompositions.Add(go);
-    //    }
-
-    //    SetLayerToForeground();
-    //}
-
-    //private void SetLayerToForeground()
-    //{
-    //    foreach (var item in GamePopulationController.ElementsCompositions)
-    //    {
-    //        item.layer = 9; // set layer to Foreground
-    //    }
-    //}
+    private void SetLayerToForeground()
+    {
+        foreach (var item in GamePopulationController.ElementsCompositions)
+        {
+            item.layer = 9; // set layer to Foreground
+        }
+    }
 
 
 }
