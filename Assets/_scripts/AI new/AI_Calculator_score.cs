@@ -51,17 +51,17 @@ public class AI_Calculator_score : MonoBehaviour
         else
         {
             
-            frames++;
+            //frames++;
 
-            if (frames % steps == 0)
-            {
-                openCVManager.CallForOpenCVCalculationUpdates(); // 1
-                gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
-                barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
-                barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-                barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-                barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
-            }
+            //if (frames % steps == 0)
+            //{
+            //    openCVManager.CallForOpenCVCalculationUpdates(); // 1
+            //    gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+            //    barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+            //    barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+            //    barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+            //    barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+            //}
 
 
         }

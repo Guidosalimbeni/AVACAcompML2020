@@ -8,21 +8,35 @@ public class BarracudaOpenCvFeature : MonoBehaviour
 {
     public NNModel ModelOpenCVFeatures;
     public event Action<float> OnScoreAllscoresfeatures;
-
+    public string modelName;
     private IWorker worker;
     private ScoreCalculator scoreCalculator;
     private float ScoreAllscoreFeatures;
+    private Model model;
+
+    public bool useONX = false;
 
     private void Awake()
     {
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
-    }
 
+        if (useONX)
+        {
+            model = ModelLoader.Load(ModelOpenCVFeatures);
+        }
+        //
+        else
+        {
+            model = ModelLoader.LoadFromStreamingAssets(modelName + ".onnx");
+        }
+
+    }
     private void Start()
     {
-        var model = ModelLoader.Load(ModelOpenCVFeatures);
+         
         //worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.ComputePrecompiled, model);
-        worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        worker = WorkerFactory.CreateWorker(model);
     }
 
     // call from leantouch and population manager one during breeding and one for last move

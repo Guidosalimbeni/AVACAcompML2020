@@ -9,20 +9,33 @@ public class BarracudaFinalOut : MonoBehaviour
 
     public NNModel ModelFinalOut;
     public event Action<float> OnScoreFinalOutChanged;
-
+    public string modelName;
     private IWorker worker;
     private float scoreFinalOut;
     private ScoreCalculator scoreCalculator;
+    private Model model;
+    public bool useONX = false;
 
     private void Awake()
     {
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
-    }
 
+        if (useONX)
+        {
+            model = ModelLoader.Load(ModelFinalOut);
+        }
+        //
+        else
+        {
+            model = ModelLoader.LoadFromStreamingAssets(modelName + ".onnx");
+        }
+
+    }
     private void Start()
     {
-        var model = ModelLoader.Load(ModelFinalOut);
-        worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        
+        //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        worker = WorkerFactory.CreateWorker(model);
     }
 
     // call from leantouch and population manager one during breeding and one for last move

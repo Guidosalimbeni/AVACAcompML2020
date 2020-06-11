@@ -23,14 +23,31 @@ public class BarracudaNNfromDatabase : MonoBehaviour
     public RenderTexture camRenderFront; 
     public RenderTexture camRenderTop;
     public GameObject plane;
+    public string modelName;
 
     private IWorker worker;
     private float scoreNNFrontTop;
+    Model model;
+    public bool useONX = false;
 
+    private void Awake()
+    {
+        if (useONX)
+        {
+            model = ModelLoader.Load(modelSourceNNFrontTOP);
+        }
+        //
+        else
+        {
+            model = ModelLoader.LoadFromStreamingAssets(modelName + ".onnx");
+        }
+
+    }
     private void Start()
     {
-        var model = ModelLoader.Load(modelSourceNNFrontTOP);
-        worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        
+        //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
+        worker = WorkerFactory.CreateWorker(model);
     }
 
     //call from leantouch and population manager one during breeding and one for last move

@@ -12,20 +12,20 @@ public class AcavaAcademy : MonoBehaviour
     private GamePopulationController GamePopulationController;
     private CalculateCollisionDistanceVisualUnity CalculateCollisionDistanceVisualUnity;
     private int NumberOfAgentsInScene;
-    private int count = 0;
+    
 
     private void Awake()
     {
         
         GamePopulationController = FindObjectOfType<GamePopulationController>();
         CalculateCollisionDistanceVisualUnity = FindObjectOfType<CalculateCollisionDistanceVisualUnity>();
-        Comp_agent_float[] agents = FindObjectsOfType<Comp_agent_float>();
+        Comp_agent_float_move_child[] agents = FindObjectsOfType<Comp_agent_float_move_child>();
         NumberOfAgentsInScene = agents.Length;
         itemToPassForCalculation = new List<GameObject>();
     }
 
 
-    public void EnvironmentReset(Comp_agent_float agent)
+    public void EnvironmentReset(Comp_agent_float_move_child agent)
     {
 
 
@@ -42,11 +42,12 @@ public class AcavaAcademy : MonoBehaviour
         //Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0f, UnityEngine.Random.Range(-1.0f, 1.0f));
         //var spawnRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
 
-        Vector3 spawnLocation = new Vector3(0f, 0f, 0f);
-        var spawnRotation = Quaternion.Euler(0f, 0f, 0f);
+        //Vector3 spawnLocation = new Vector3(0f, 0f, 0f);
+        //var spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
-        GameObject item = Instantiate(elementsOfAiComposition[Random.Range(0, elementsOfAiComposition.Length)], spawnLocation, spawnRotation);
         GameObject Parent = agent.gameObject;
+        GameObject item = Instantiate(elementsOfAiComposition[Random.Range(0, elementsOfAiComposition.Length)], Parent.transform.localPosition, Parent.transform.localRotation);
+        
         item.transform.parent = Parent.transform;
 
         itemToPassForCalculation.Add(item);

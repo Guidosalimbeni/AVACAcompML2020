@@ -411,7 +411,7 @@ MonoBehaviour:
   IgnoreStartedOverGui: 1
   IgnoreIsOverGui: 0
   RequiredFingerCount: 0
-  RequiredSelectable: {fileID: 5028550019250447347}
+  RequiredSelectable: {fileID: 101702260}
   ScreenDepth:
     Conversion: 3
     Camera: {fileID: 0}
@@ -2338,7 +2338,7 @@ MonoBehaviour:
   IgnoreStartedOverGui: 1
   IgnoreIsOverGui: 0
   RequiredFingerCount: 0
-  RequiredSelectable: {fileID: 5028550019250447347}
+  RequiredSelectable: {fileID: 522438746}
   ScreenDepth:
     Conversion: 3
     Camera: {fileID: 0}
@@ -5233,10 +5233,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38a7e12a3fab81e46915ebc5881c3b92, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelSource: {fileID: 11400000, guid: 9720ff155222f1247b3c3c187a70a11d, type: 3}
+  modelSource: {fileID: 5022602860645237092, guid: 63d79707acb61ed45b9b51cf50db4e86,
+    type: 3}
   camRenderTexture: {fileID: 8400000, guid: 0e9dcc42becc35843839a70fc4cbd65c, type: 2}
   W: 64
   H: 64
+  modelName: 
+  useONX: 1
 --- !u!4 &1243336898
 Transform:
   m_ObjectHideFlags: 0
@@ -5263,11 +5266,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3ca55a6aeadbc647b5ebbf2eea6c9ed, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modelSourceNNFrontTOP: {fileID: 11400000, guid: 2d2cc641537d312459b62e49b48a8bd0,
+  modelSourceNNFrontTOP: {fileID: 5022602860645237092, guid: fe864fb9492bdc94ca34d559c93b79ba,
     type: 3}
   camRenderFront: {fileID: 8400000, guid: 47502361a74b3e945adb492b0c19e90c, type: 2}
   camRenderTop: {fileID: 8400000, guid: 315e2bf30e299cc4f9e72fe2fda83bcf, type: 2}
   plane: {fileID: 1974093884}
+  modelName: 
+  useONX: 1
 --- !u!114 &1243336900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5280,8 +5285,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 84bed839b4838974bb99a32c6c0fbfa2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ModelOpenCVFeatures: {fileID: 11400000, guid: 7c16edc840493d74b80c81f72e1f32d7,
+  ModelOpenCVFeatures: {fileID: 5022602860645237092, guid: 48ac5a131db5a5544ad96f1eda129aad,
     type: 3}
+  modelName: 
+  useONX: 1
 --- !u!114 &1243336901
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5294,7 +5301,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 757802f174c243b4dbb1dfc21915289d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ModelFinalOut: {fileID: 11400000, guid: 0c0b68fc1f186e3459dd2577d7cb4666, type: 3}
+  ModelFinalOut: {fileID: 5022602860645237092, guid: bddad382c73b8e945b5fc3ea9e5d6486,
+    type: 3}
+  modelName: 
+  useONX: 1
 --- !u!1 &1306251479
 GameObject:
   m_ObjectHideFlags: 0

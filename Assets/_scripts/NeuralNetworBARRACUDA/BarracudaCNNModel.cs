@@ -20,15 +20,31 @@ public class BarracudaCNNModel : MonoBehaviour
     public RenderTexture camRenderTexture; // this is 64 x 64 changed using custom... but need this to come as 240 x 180 and then convert to 64 64
     public int W = 64;
     public int H = 64;
+    public string modelName;
 
     private IWorker worker;
     //private Texture2D normTxt;
     private float ScoreFromBarracudaCNN;
+    private Model model;
+    public bool useONX = false;
 
+    private void Awake()
+    {
+        if (useONX)
+        {
+            model = ModelLoader.Load(modelSource);
+        }
+        //
+        else
+        {
+            model = ModelLoader.LoadFromStreamingAssets(modelName + ".onnx");
+        }
+        
+    }
     private void Start()
     {
         //normTxt = new Texture2D(W, H, TextureFormat.RGB24, false);
-        var model = ModelLoader.Load(modelSource);
+        //var model = ModelLoader.Load(modelSource);
         //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
         worker = WorkerFactory.CreateWorker(model);
     }

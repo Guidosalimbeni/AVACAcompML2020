@@ -4,9 +4,9 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 using System;
 
-public class Comp_agent_float : Agent
+public class Comp_agent_float_move_child : Agent
 {
-    
+
     public bool useVectorObs;
     public float speed = 10.0f;
     public bool webtraining = false;
@@ -25,12 +25,12 @@ public class Comp_agent_float : Agent
 
     private void Awake()
     {
-        
+
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
         aI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         acavaAcademy = FindObjectOfType<AcavaAcademy>();
-        
-        
+
+
         if (webtraining == false)
         {
             cameraPaint = Camera.main;
@@ -52,12 +52,9 @@ public class Comp_agent_float : Agent
                 }
             }
         }
-        
-
     }
 
-
-private void OnTriggerEnter(Collider other)
+    public void PullTrigger(Collider other)
     {
 
         if (aI_Calculator_score.inferenceMode == false)
@@ -65,15 +62,16 @@ private void OnTriggerEnter(Collider other)
             if (other.gameObject.tag == "bounds")
             {
                 Debug.Log(" out of table");
-                
+
                 AddReward(-1 / MaxStep);
 
             }
         }
+
     }
 
 
-    public override void CollectObservations(VectorSensor sensor)
+    public override void CollectObservations(VectorSensor sensor) // get from child
     {
         if (useVectorObs)
         {
@@ -81,13 +79,13 @@ private void OnTriggerEnter(Collider other)
             sensor.AddObservation(gameObject.transform.rotation.y);
             sensor.AddObservation(gameObject.transform.position);
             sensor.AddObservation(centerPoint.transform.position - gameObject.transform.position);
-            
+
         }
     }
 
-    public void MoveAgent(float[] vectorAction)
+    public void MoveAgent(float[] vectorAction) // send to child
     {
-        
+
         if (targetReached == false)
         {
             var posX = Mathf.Clamp(vectorAction[0], -1.5f, 1.5f);
@@ -160,24 +158,24 @@ private void OnTriggerEnter(Collider other)
 
             scoreFinalOut = (scoreUnityVisual + visualScoreBalancePixelsCount + scoreLawOfLever + scoreIsolationBalance) / 4;
         }
-            
+
 
         //Debug.Log(a);
-        
+
 
         if (scoreFinalOut > aI_Calculator_score.target)
         {
-            
+
             if (aI_Calculator_score.inferenceMode)
             {
                 targetReached = true;
-                
+
             }
             else
             {
                 Debug.Log(" WINNNNNNIIIINNG");
                 SetReward(1f);
-                EndEpisode(); 
+                EndEpisode();
             }
         }
 
@@ -200,7 +198,7 @@ private void OnTriggerEnter(Collider other)
     {
         if (aI_Calculator_score.inferenceMode == false)
             AddReward(-1f / MaxStep);
-        //MoveAgent(vectorAction);
+        //MoveAgent(vectorAction); // comment it out but then need to think about when to fire AI... need to do differently for training but need to move chield in training as well 
     }
 
 
@@ -214,8 +212,8 @@ private void OnTriggerEnter(Collider other)
         //transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
 
 
-        //if (targetReached == false)
-        //    acavaAcademy.EnvironmentReset(this);   /// to uncomment if move child agent does not work--
+        if (targetReached == false)
+            acavaAcademy.EnvironmentReset(this);
     }
 
     //public override void Heuristic(float[] actionsOut)
