@@ -73,18 +73,24 @@ public class Comp_agent_float_move_child : Agent
 
     public override void CollectObservations(VectorSensor sensor) // get from child
     {
+
+        ChildTrigger child = GetComponentInChildren<ChildTrigger>();
+        GameObject itemChild = child.gameObject;
+        
         if (useVectorObs)
         {
             //sensor.AddObservation(StepCount / (float)MaxStep);
-            sensor.AddObservation(gameObject.transform.rotation.y);
-            sensor.AddObservation(gameObject.transform.position);
-            sensor.AddObservation(centerPoint.transform.position - gameObject.transform.position);
+            sensor.AddObservation(itemChild.transform.rotation.y);
+            sensor.AddObservation(itemChild.transform.position);
+            sensor.AddObservation(centerPoint.transform.position - itemChild.transform.position);
 
         }
     }
 
     public void MoveAgent(float[] vectorAction) // send to child
     {
+        ChildTrigger child = GetComponentInChildren<ChildTrigger>();
+        GameObject itemChild = child.gameObject;
 
         if (targetReached == false)
         {
@@ -101,27 +107,29 @@ public class Comp_agent_float_move_child : Agent
                     PosZ);
 
                     float step = speed * Time.deltaTime;
-                    transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
-
+                    itemChild.transform.position = Vector3.MoveTowards(itemChild.transform.position, targetPosition, step);
+                    itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
                 }
                 else
                 {
-                    transform.position = new Vector3(posX,
-                    transform.position.y,
+                    itemChild.transform.position = new Vector3(posX,
+                    itemChild.transform.position.y,
                     PosZ);
+                    itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
                 }
 
             }
 
             else
             {
-                transform.position = new Vector3(posX,
-                    transform.position.y,
+                itemChild.transform.position = new Vector3(posX,
+                    itemChild.transform.position.y,
                     PosZ);
+                itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
             }
 
 
-            transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
+            
 
         }
 
@@ -198,7 +206,7 @@ public class Comp_agent_float_move_child : Agent
     {
         if (aI_Calculator_score.inferenceMode == false)
             AddReward(-1f / MaxStep);
-        //MoveAgent(vectorAction); // comment it out but then need to think about when to fire AI... need to do differently for training but need to move chield in training as well 
+        MoveAgent(vectorAction); // comment it out but then need to think about when to fire AI... need to do differently for training but need to move chield in training as well 
     }
 
 
