@@ -11,7 +11,7 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaOpenCvFeature barracudaOpenCvFeature;
     private BarracudaFinalOut barracudaFinalOut;
     private Comp_agent_float_move_child[] agents;
-    private int maxFramesForRound;
+    public int maxFramesForRound { get; set; }
 
     public int steps = 6;
     public float target = 0.95f;
@@ -42,11 +42,10 @@ public class AI_Calculator_score : MonoBehaviour
 
     private void FixedUpdate()
     {
+        frames++;
 
         if (inferenceMode == false)
         {
-            frames++;
-
             if (frames % steps == 0)
             {
                 openCVManager.CallForOpenCVCalculationUpdates(); // 1 pixel count
@@ -67,7 +66,6 @@ public class AI_Calculator_score : MonoBehaviour
                     agents[i].enabled = true;
                 }
 
-                frames++;
 
                 if (frames % steps == 0)
                 {
@@ -82,25 +80,19 @@ public class AI_Calculator_score : MonoBehaviour
 
             if(AIturn == false)
             {
-                frames++;
+                
                 // scoring it is trigger by event on finger up
                 
                 for (int i = 0; i < agents.Length; i++)
                 {
                     agents[i].enabled = false;
                 }
-
-
             }
-            
-
-
         }
 
-        if (OnFramesCountChanged != null)
-        {
-            OnFramesCountChanged(frames);
-        }
+        
+
+        OnFramesCountChanged?.Invoke(frames);
 
         if (frames > maxFramesForRound)
         {
