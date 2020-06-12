@@ -4,6 +4,16 @@ using System;
 
 public class AI_Calculator_score : MonoBehaviour
 {
+    
+    public int maxFramesForRound { get; set; }
+
+    public int steps = 6;
+    public float target = 0.95f;
+    public bool movetotarget = true;
+    public bool inferenceMode = false;
+    public bool AIturn = false;
+
+    private int frames = 0;
     private OpenCVManager openCVManager;
     private GameVisualManager gameManagerNotOpenCV;
     private BarracudaCNNModel barracudaCNNModel;
@@ -11,14 +21,7 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaOpenCvFeature barracudaOpenCvFeature;
     private BarracudaFinalOut barracudaFinalOut;
     private Comp_agent_float_move_child[] agents;
-    public int maxFramesForRound { get; set; }
-
-    public int steps = 6;
-    public float target = 0.95f;
-    private int frames = 0;
-    public bool movetotarget = true;
-    public bool inferenceMode = false;
-    public bool AIturn = false;
+    private float currentScore;
 
     public event Action<int> OnFramesCountChanged;
 
@@ -38,6 +41,14 @@ public class AI_Calculator_score : MonoBehaviour
         {
             maxFramesForRound = agents[i].MaxStep; // they are all the same so taking last one
         }
+
+        barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+
+    }
+
+    private void Handle_OnScoreFinalOutChanged(float score)
+    {
+        currentScore = score;
     }
 
     private void FixedUpdate()
@@ -75,6 +86,11 @@ public class AI_Calculator_score : MonoBehaviour
                     barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
                     barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
                     barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+                }
+
+                if (currentScore >= target)
+                {
+                    AIturn = false;
                 }
             }
 
