@@ -2372,7 +2372,7 @@ MonoBehaviour:
   SelectUsing: 0
   LayerMask:
     serializedVersion: 2
-    m_Bits: 2871
+    m_Bits: 823
   Camera: {fileID: 0}
   MaxSelectables: 0
   Search: 0
@@ -5102,7 +5102,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1200, y: 900}
+  m_SizeDelta: {x: 1202.4, y: 957}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1236133766
 MonoBehaviour:
@@ -7563,6 +7563,7 @@ MonoBehaviour:
   target: 0.7
   movetotarget: 1
   inferenceMode: 1
+  AIturn: 0
 --- !u!114 &1778068980
 MonoBehaviour:
   m_ObjectHideFlags: 0

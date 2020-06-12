@@ -6,7 +6,8 @@ using UnityEngine.SceneManagement;
 public class LoadsceneProgressBar : MonoBehaviour
 {
     public GameObject LoadingScreen;
-    public Slider slider;
+    public Image slider;
+    public Text text;
 
     public void LoadLevel(int sceneIndex)
     {
@@ -20,8 +21,11 @@ public class LoadsceneProgressBar : MonoBehaviour
         LoadingScreen.SetActive(true);
         while (!operation.isDone)
         {
-            float progress = Mathf.Clamp01(operation.progress / .9f);
-            slider.value = progress;
+            float progress = Mathf.Clamp01(operation.progress / 0.9f);
+
+            
+            slider.fillAmount = progress;
+            text.text = progress * 100 + " %";
 
             yield return null;
         }
