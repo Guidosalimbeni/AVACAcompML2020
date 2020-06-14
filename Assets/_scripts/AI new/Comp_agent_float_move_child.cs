@@ -21,8 +21,6 @@ public class Comp_agent_float_move_child : Agent
     private float scoreFinalOut;
     private float scoreUnityVisual;
 
-    float a = 0.0f;
-
     private void Awake()
     {
 
@@ -79,7 +77,6 @@ public class Comp_agent_float_move_child : Agent
         
         if (useVectorObs)
         {
-            //sensor.AddObservation(StepCount / (float)MaxStep);
             sensor.AddObservation(itemChild.transform.rotation.y);
             sensor.AddObservation(itemChild.transform.position);
             sensor.AddObservation(centerPoint.transform.position - itemChild.transform.position);
@@ -128,9 +125,6 @@ public class Comp_agent_float_move_child : Agent
                 itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
             }
 
-
-            
-
         }
 
         FireScoreCalculation();
@@ -146,13 +140,6 @@ public class Comp_agent_float_move_child : Agent
             scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
             scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
 
-
-
-            if (scoreFinalOut > a)
-            {
-                Debug.Log(scoreFinalOut);
-                a = scoreFinalOut;
-            }
         }
 
         else
@@ -160,15 +147,15 @@ public class Comp_agent_float_move_child : Agent
             scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
 
 
-            float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
-            float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
-            float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
+            //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
+            //float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
+            //float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
 
-            scoreFinalOut = (scoreUnityVisual + visualScoreBalancePixelsCount + scoreLawOfLever + scoreIsolationBalance) / 4;
+            //scoreFinalOut = (scoreUnityVisual + visualScoreBalancePixelsCount + scoreLawOfLever + scoreIsolationBalance) / 4;
+
+            scoreFinalOut = scoreCalculator.scoreFinalOut;
+            
         }
-
-
-        //Debug.Log(a);
 
 
         if (scoreFinalOut > aI_Calculator_score.target)
@@ -197,7 +184,6 @@ public class Comp_agent_float_move_child : Agent
         {
             if (aI_Calculator_score.inferenceMode == false)
                 AddReward(-1 / MaxStep);
-            //EndEpisode(); // will make everything restarts
         }
 
     }
@@ -206,30 +192,21 @@ public class Comp_agent_float_move_child : Agent
     {
         if (aI_Calculator_score.inferenceMode == false)
             AddReward(-1f / MaxStep);
-        MoveAgent(vectorAction); // comment it out but then need to think about when to fire AI... need to do differently for training but need to move chield in training as well 
+        MoveAgent(vectorAction); 
     }
 
 
     public override void OnEpisodeBegin()
     {
-        a = 0.0f;
-
-
-
-        //transform.position = new Vector3(UnityEngine.Random.Range(-1.2f, 1.2f), 0f, UnityEngine.Random.Range(-1.5f, 1.5f));
-        //transform.rotation = Quaternion.Euler(0f, UnityEngine.Random.Range(0f, 360f), 0f);
-
 
         if (targetReached == false)
             acavaAcademy.EnvironmentReset(this);
     }
 
-    //public override void Heuristic(float[] actionsOut)
-    //{
-    //    actionsOut[0] = Input.GetAxis("Horizontal");    
+    public void ResetEnviromentFromPlayMode()
+    {
+        acavaAcademy.EnvironmentReset(this);
+    }
 
-    //    actionsOut[1] = Input.GetAxis("Vertical");   
-    //    actionsOut[2] = Input.GetKey(KeyCode.Space) ? 1f : 0f;   
-    //}
 }
 

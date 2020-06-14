@@ -208,10 +208,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2baa936f016a9a14e86ac8ea42211f4a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  AutoGetDefaultColor: 1
+  AutoGetDefaultColor: 0
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
   SelectedColor: {r: 0, g: 0.65743715, b: 0.8490566, a: 1}
-  CloneMaterials: 0
+  CloneMaterials: 1
 --- !u!114 &6342568042361192705
 MonoBehaviour:
   m_ObjectHideFlags: 0

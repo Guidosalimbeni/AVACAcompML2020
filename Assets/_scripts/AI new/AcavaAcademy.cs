@@ -27,8 +27,6 @@ public class AcavaAcademy : MonoBehaviour
 
     public void EnvironmentReset(Comp_agent_float_move_child agent)
     {
-
-
         TagMeElementOfComposition elem = agent.GetComponentInChildren<TagMeElementOfComposition>();
         
         if(elem != null)
@@ -38,17 +36,16 @@ public class AcavaAcademy : MonoBehaviour
             
         }
 
-
-        //Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0f, UnityEngine.Random.Range(-1.0f, 1.0f));
+        Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0f, UnityEngine.Random.Range(-1.5f, 1.5f));
         //var spawnRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
-
-        //Vector3 spawnLocation = new Vector3(0f, 0f, 0f);
-        //var spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
         GameObject Parent = agent.gameObject;
         GameObject item = Instantiate(elementsOfAiComposition[Random.Range(0, elementsOfAiComposition.Length)], Parent.transform.localPosition, Parent.transform.localRotation);
         
         item.transform.parent = Parent.transform;
+
+        item.transform.position = spawnLocation;
+
 
         itemToPassForCalculation.Add(item);
         if (itemToPassForCalculation.Count > NumberOfAgentsInScene)

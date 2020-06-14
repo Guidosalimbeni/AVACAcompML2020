@@ -1,18 +1,30 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System;
+using System.Collections;
+using UnityEngine.UI;
+using Unity.MLAgents;
+using System.Diagnostics.Eventing.Reader;
 
 public class AI_Calculator_score : MonoBehaviour
 {
     
-    public int maxFramesForRound { get; set; }
+    //public int maxFramesForRound { get; set; }
 
-    public int steps = 6;
+    public int maxFramesForRound = 600;
+
+    
     public float target = 0.95f;
     public bool movetotarget = true;
     public bool inferenceMode = false;
-    public bool AIturn = false;
+    public int timeTutorial = 120;
+    public GameObject you;
+    public GameObject AI;
 
+    public bool playerButtonOK { get; set; }
+    private bool AIturn = false;
+
+    private int steps = 6;
     private int frames = 0;
     private OpenCVManager openCVManager;
     private GameVisualManager gameManagerNotOpenCV;
@@ -22,6 +34,10 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaFinalOut barracudaFinalOut;
     private Comp_agent_float_move_child[] agents;
     private float currentScore;
+    private Image youColor;
+    private Image AIColor;
+    private float currentScoreAI;
+    private float currentScorePLAYER;
 
     public event Action<int> OnFramesCountChanged;
 
@@ -36,10 +52,14 @@ public class AI_Calculator_score : MonoBehaviour
         barracudaOpenCvFeature = FindObjectOfType<BarracudaOpenCvFeature>();
         barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
         agents = FindObjectsOfType<Comp_agent_float_move_child>();
-        
+        youColor = you.GetComponent<Image>();
+        AIColor = AI.GetComponent<Image>();
+
+        playerButtonOK = false;
+
         for (int i = 0; i < agents.Length; i++)
         {
-            maxFramesForRound = agents[i].MaxStep; // they are all the same so taking last one
+            steps = agents[i].GetComponent<DecisionRequester>().DecisionPeriod; // they are all the same so taking last one
         }
 
         barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
@@ -53,80 +73,166 @@ public class AI_Calculator_score : MonoBehaviour
 
     private void FixedUpdate()
     {
+        //for (int i = 0; i < agents.Length; i++)
+        //{
+        //    agents[i].enabled = false;
+        //}
+
         frames++;
 
-        if (inferenceMode == false)
+        if (inferenceMode == false) // if training
         {
             if (frames % steps == 0)
             {
-                openCVManager.CallForOpenCVCalculationUpdates(); // 1 pixel count
-                gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
-                barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
-                barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-                barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-                barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+                CallToCalculateScores();
             }
         }
 
         if (inferenceMode == true)
         {
-            if (AIturn == true)
-            {
-                for (int i = 0; i < agents.Length; i++)
-                {
-                    agents[i].enabled = true;
-                }
+            PlayGameLogic();
 
-
-                if (frames % steps == 0)
-                {
-                    openCVManager.CallForOpenCVCalculationUpdates(); // 1
-                    gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
-                    barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
-                    barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
-                    barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
-                    barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
-                }
-
-                if (currentScore >= target)
-                {
-                    AIturn = false;
-                }
-            }
-
-            if(AIturn == false)
-            {
-                
-                // scoring it is trigger by event on finger up
-                
-                for (int i = 0; i < agents.Length; i++)
-                {
-                    agents[i].enabled = false;
-                }
-            }
         }
 
-        
+    }
+
+    private void PlayGameLogic()
+    {
+        if (AIturn == false)
+        {
+
+            youColor.color = new Color(256, 0, 0);
+            AIColor.color = new Color(256, 256, 256);
+
+            // scoring it is triggered by event on finger up
+            for (int i = 0; i < agents.Length; i++)
+            {
+                agents[i].enabled = false;
+            }
+
+            if (playerButtonOK == true) 
+            {
+                //frames = maxFramesForRound + timeTutorial;
+                frames = maxFramesForRound;
+                playerButtonOK = false;
+            }
+
+        }
+
+        if (AIturn == true)
+        {
+
+            youColor.color = new Color(256, 256, 256);
+            AIColor.color = new Color(256, 0, 0);
+
+            for (int i = 0; i < agents.Length; i++)
+            {
+                agents[i].enabled = true;
+            }
+
+            if (frames % steps == 0)
+            {
+                CallToCalculateScores();
+            }
+
+            if (currentScore >= target)
+            {
+                //AIturn = false;
+
+                //frames = maxFramesForRound + timeTutorial;
+
+                
+
+                //for (int i = 0; i < agents.Length; i++)
+                //{
+                //    //agents[i].ResetEnviromentFromPlayMode();
+                //    agents[i].enabled = false;
+                //}
+
+                frames = maxFramesForRound;
+            }
+
+        }
 
         OnFramesCountChanged?.Invoke(frames);
 
-        if (frames > maxFramesForRound)
+        if (frames == maxFramesForRound)
         {
-            // start couroutine to display score and ask to continue if round AI completed
+
+            if (AIturn)
+            {
+
+                currentScoreAI = currentScore;
+                
+                StartCoroutine(PauseGame(5.0f));
+
+                
+
+            }
+
+            else
+            {
+                currentScorePLAYER = currentScore;
+                
+            }
+
+
+            for (int i = 0; i < agents.Length; i++)
+            {
+                //agents[i].enabled = true;
+                //agents[i].ResetEnviromentFromPlayMode();
+                //agents[i].enabled = false;
+
+                agents[i].enabled = !agents[i].enabled;
+            }
+
+
             AIturn = !AIturn;
             frames = 0;
+            currentScore = 0.0f;
+            
 
         }
 
-        
+    }
+
+    private void ShuffleItemPositionWithAgentEnable()
+    {
+        for (int i = 0; i < agents.Length; i++)
+        {
+            Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0f, UnityEngine.Random.Range(-1.0f, 1.0f));
+            ChildTrigger item = agents[i].GetComponentInChildren<ChildTrigger>();
+            item.transform.position = spawnLocation;
+        }
+    }
+
+    private void CallToCalculateScores()
+    {
+        openCVManager.CallForOpenCVCalculationUpdates(); // 1 pixel count
+        gameManagerNotOpenCV.CallTOCalculateNOTOpenCVScores(); // +3 = 4 of the barracyuda calculate opencv features score
+        barracudaCNNModel.CallTOCalculateBarracudaCNNScore();
+        barracudaNNfromDatabase.CallTOCalculateBarracudaNNFrontTopcore();
+        barracudaOpenCvFeature.BarracudaCallTOCalculateOpencvFeaturesScore();
+        barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
+    }
+
+    private  IEnumerator PauseGame(float pauseTime)
+    {
+        Debug.Log("AI score  " + currentScoreAI);
+        Debug.Log("Player score  " + currentScorePLAYER);
+        Time.timeScale = 0f;
+        float pauseEndTime = Time.realtimeSinceStartup + pauseTime;
+        while (Time.realtimeSinceStartup < pauseEndTime)
+        {
+            yield return 0;
+        }
+        Time.timeScale = 1f;
+        Debug.Log("Done with my pause");
+        //PauseEnded();
+
+        ShuffleItemPositionWithAgentEnable();
 
     }
     
-    // the idea is clock from game manager establish the turns... the turns last by academy steps .. before running again
-    // it shows the score of player ... then run AI ... when AI finished .. it shows screen with who winning ...
-    // thank you for helping the project.. do you fancy a new round? or quit.. 
-    // check data sent to database that are saved correctly with correct score ets..
-    // not sure if it is better to stop move or deactivate agent script... I can use the frames count here for both clock 
-    // and agent deativate.. by looking at agent max steps.. so it matches if I change it.. reference to max step..
 
 }
