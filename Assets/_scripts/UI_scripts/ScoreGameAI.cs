@@ -2,20 +2,43 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
+using UnityEngine.Advertisements;
+using System.Security.Permissions;
 
-public class ScoreWeb : MonoBehaviour
+public class ScoreGameAI : MonoBehaviour
 {
     public Image progressbar;
     public Text text;
+    public TextMeshProUGUI YOUSCORED;
+    public TextMeshProUGUI AISCORED;
+    public GameObject ScorePanel;
 
     private BarracudaFinalOut barracudaFinalOut;
-
+    private AI_Calculator_score AI_Calculator_score;
+    
 
     private void Awake()
     {
-        
         barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
+        AI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+    }
+
+    
+
+    public void ShowResult(float playerScore, float AIScore)
+    {
+        ScorePanel.SetActive(true);
+        YOUSCORED.text = string.Format("YOU SCORED {0}", playerScore);
+        AISCORED.text = string.Format("AI SCORED {0}", AIScore);
+
+
+    }
+
+    public void CloseGameResultPanel()
+    {
+        ScorePanel.SetActive(false);
     }
 
     private void Handle_OnScoreFinalOutChanged(float scoreFinalOutPassed)

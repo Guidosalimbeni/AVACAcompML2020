@@ -38,13 +38,16 @@ public class AI_Calculator_score : MonoBehaviour
     private Image AIColor;
     private float currentScoreAI;
     private float currentScorePLAYER;
+    private ScoreGameAI ScoreGameAI;
 
     public event Action<int> OnFramesCountChanged;
+
 
     public bool buttonRunRobot { get; set; }
 
     private void Awake()
     {
+        ScoreGameAI = FindObjectOfType<ScoreGameAI>();
         openCVManager = FindObjectOfType<OpenCVManager>();
         gameManagerNotOpenCV = FindObjectOfType<GameVisualManager>();
         barracudaCNNModel = FindObjectOfType<BarracudaCNNModel>();
@@ -159,18 +162,13 @@ public class AI_Calculator_score : MonoBehaviour
         if (frames == maxFramesForRound)
         {
 
-            if (AIturn)
+            if (AIturn == true)
             {
-
                 currentScoreAI = currentScore;
-                
                 StartCoroutine(PauseGame(5.0f));
-
-                
-
             }
 
-            else
+            if (AIturn == false)
             {
                 currentScorePLAYER = currentScore;
                 
@@ -179,19 +177,12 @@ public class AI_Calculator_score : MonoBehaviour
 
             for (int i = 0; i < agents.Length; i++)
             {
-                //agents[i].enabled = true;
-                //agents[i].ResetEnviromentFromPlayMode();
-                //agents[i].enabled = false;
-
                 agents[i].enabled = !agents[i].enabled;
             }
-
 
             AIturn = !AIturn;
             frames = 0;
             currentScore = 0.0f;
-            
-
         }
 
     }
@@ -216,10 +207,9 @@ public class AI_Calculator_score : MonoBehaviour
         barracudaFinalOut.BarracudaCallTOCalculateFinalOutScore();
     }
 
-    private  IEnumerator PauseGame(float pauseTime)
+    private  IEnumerator PauseGame(float pauseTime) // need to disable lean touch as well--no se no come faccio a cliccare yes..?
     {
-        Debug.Log("AI score  " + currentScoreAI);
-        Debug.Log("Player score  " + currentScorePLAYER);
+        ScoreGameAI.ShowResult(currentScorePLAYER, currentScoreAI);
         Time.timeScale = 0f;
         float pauseEndTime = Time.realtimeSinceStartup + pauseTime;
         while (Time.realtimeSinceStartup < pauseEndTime)
@@ -227,8 +217,9 @@ public class AI_Calculator_score : MonoBehaviour
             yield return 0;
         }
         Time.timeScale = 1f;
-        Debug.Log("Done with my pause");
-        //PauseEnded();
+        
+
+        ScoreGameAI.CloseGameResultPanel();
 
         ShuffleItemPositionWithAgentEnable();
 
