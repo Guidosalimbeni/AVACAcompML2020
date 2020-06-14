@@ -13,15 +13,21 @@ public class ScoreGameAI : MonoBehaviour
     public TextMeshProUGUI YOUSCORED;
     public TextMeshProUGUI AISCORED;
     public GameObject ScorePanel;
+    public TextMeshProUGUI AItextPoint;
+    public TextMeshProUGUI PlayertextPoint;
 
     private BarracudaFinalOut barracudaFinalOut;
-    private AI_Calculator_score AI_Calculator_score;
+    private int ScorePointAI = 0;
+    private int ScorePointPlayer = 0;
+    
+
     
 
     private void Awake()
     {
+        AItextPoint.text = string.Format("{0}", 0);
+        PlayertextPoint.text = string.Format("{0}", 0);
         barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
-        AI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
     }
 
@@ -33,6 +39,18 @@ public class ScoreGameAI : MonoBehaviour
         YOUSCORED.text = string.Format("YOU SCORED {0}", playerScore);
         AISCORED.text = string.Format("AI SCORED {0}", AIScore);
 
+        if (playerScore > AIScore)
+        {
+            ScorePointPlayer++;
+        }
+
+        else
+        {
+            ScorePointAI++;
+        }
+
+        AItextPoint.text = string.Format("{0}" , ScorePointAI);
+        PlayertextPoint.text = string.Format("{0}", ScorePointPlayer);
 
     }
 
@@ -44,19 +62,19 @@ public class ScoreGameAI : MonoBehaviour
     private void Handle_OnScoreFinalOutChanged(float scoreFinalOutPassed)
     {
         float  scoreFinalOut = scoreFinalOutPassed;
-        float score = 0.0f;
-        float thresh = 0.99f;
-        if (scoreFinalOut < thresh)
-        {
-            score = map(scoreFinalOut, 0, thresh, 0, 0.85f);
-        }
-        else
-        {
-            score = map(scoreFinalOut, thresh, 1, 0.85f, 1f);
-        }
+        //float score = 0.0f;
+        //float thresh = 0.99f;
+        //if (scoreFinalOut < thresh)
+        //{
+        //    score = map(scoreFinalOut, 0, thresh, 0, 0.85f);
+        //}
+        //else
+        //{
+        //    score = map(scoreFinalOut, thresh, 1, 0.85f, 1f);
+        //}
 
-        progressbar.fillAmount = score;
-        text.text = string.Format("{0}%", (score * 100).ToString("F2"));
+        progressbar.fillAmount = scoreFinalOut;
+        text.text = string.Format("{0}%", (scoreFinalOut * 100).ToString("F2"));
         
     }
 
