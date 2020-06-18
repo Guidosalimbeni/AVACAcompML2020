@@ -21,12 +21,13 @@ public class AI_Calculator_score : MonoBehaviour
     
     public GameObject you;
     public GameObject AI;
+    public float PauseTimeForScore = 3.0f;
 
     public bool playerButtonOK { get; set; }
-    public bool AIturn = false;
+    private bool AIturn = false;
 
     private int steps = 6;
-    public int frames = 0;
+    private int frames = 0;
     private OpenCVManager openCVManager;
     private GameVisualManager gameManagerNotOpenCV;
     private BarracudaCNNModel barracudaCNNModel;
@@ -74,17 +75,11 @@ public class AI_Calculator_score : MonoBehaviour
 
     private void Handle_OnScoreFinalOutChanged(float score)
     {
-        Debug.Log(score);
-        Debug.Log("score from event");
         currentScore = score;
     }
 
     private void FixedUpdate()
     {
-        //for (int i = 0; i < agents.Length; i++)
-        //{
-        //    agents[i].enabled = false;
-        //}
 
         frames++;
 
@@ -109,7 +104,7 @@ public class AI_Calculator_score : MonoBehaviour
         if (AIturn == false)
         {
 
-            youColor.color = new Color(256, 0, 0);
+            youColor.color = new Color(0, 200, 0);
             AIColor.color = new Color(256, 256, 256);
 
             // scoring it is triggered by event on finger up
@@ -131,7 +126,7 @@ public class AI_Calculator_score : MonoBehaviour
             leanTouch.enabled = false;
 
             youColor.color = new Color(256, 256, 256);
-            AIColor.color = new Color(256, 0, 0);
+            AIColor.color = new Color(0, 200, 0);
 
             for (int i = 0; i < agents.Length; i++)
             {
@@ -158,7 +153,7 @@ public class AI_Calculator_score : MonoBehaviour
             if (AIturn == true)
             {
                 currentScoreAI = currentScore;
-                StartCoroutine(PauseGame(5.0f));
+                StartCoroutine(PauseGame(PauseTimeForScore));
             }
 
             if (AIturn == false)
@@ -212,13 +207,15 @@ public class AI_Calculator_score : MonoBehaviour
             yield return 0;
         }
         Time.timeScale = 1f;
-        
 
+        ScoreGameAI.UpdatePointScores(currentScorePLAYER, currentScoreAI);
         ScoreGameAI.CloseGameResultPanel();
 
         ShuffleItemPositionWithAgentEnable();
 
     }
+
+    
     
 
 }

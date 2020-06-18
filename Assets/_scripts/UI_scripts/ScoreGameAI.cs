@@ -15,6 +15,8 @@ public class ScoreGameAI : MonoBehaviour
     public GameObject ScorePanel;
     public TextMeshProUGUI AItextPoint;
     public TextMeshProUGUI PlayertextPoint;
+    public Animator playerWinAnim;
+    public Animator AiWinAnim;
 
     private BarracudaFinalOut barracudaFinalOut;
     private int ScorePointAI = 0;
@@ -36,23 +38,34 @@ public class ScoreGameAI : MonoBehaviour
     public void ShowResult(float playerScore, float AIScore)
     {
         ScorePanel.SetActive(true);
-        YOUSCORED.text = string.Format("YOU SCORED {0}", playerScore);
-        AISCORED.text = string.Format("AI SCORED {0}", AIScore);
+        YOUSCORED.text = string.Format("YOU {0} %", playerScore.ToString("F2"));
+        AISCORED.text = string.Format("AI {0} %", AIScore.ToString("F2"));
 
+        
+
+    }
+
+    public void UpdatePointScores(float playerScore, float AIScore)
+    {
         if (playerScore > AIScore)
         {
             ScorePointPlayer++;
+            playerWinAnim.SetTrigger("playerWin");
+
         }
 
         else
         {
             ScorePointAI++;
+            AiWinAnim.SetTrigger("AiWin");
+
         }
 
-        AItextPoint.text = string.Format("{0}" , ScorePointAI);
+        AItextPoint.text = string.Format("{0}", ScorePointAI);
         PlayertextPoint.text = string.Format("{0}", ScorePointPlayer);
 
     }
+
 
     public void CloseGameResultPanel()
     {
