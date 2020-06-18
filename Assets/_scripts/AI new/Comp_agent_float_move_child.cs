@@ -9,17 +9,18 @@ public class Comp_agent_float_move_child : Agent
 
     public bool useVectorObs;
     public float speed = 10.0f;
-    public bool webtraining = false;
+    //public bool webtraining = false;
     private ScoreCalculator scoreCalculator;
     private AI_Calculator_score aI_Calculator_score;
     private bool targetReached = false;
     private Vector3 targetPosition;
-    private Camera cameraPaint;
-    private Camera cameraTop;
+    //private Camera cameraPaint;
+    //private Camera cameraTop;
     public Transform centerPoint;
     private AcavaAcademy acavaAcademy;
     private float scoreFinalOut;
     private float scoreUnityVisual;
+    private Comp_agent_float_move_child[] agentsChild;
 
     private void Awake()
     {
@@ -27,29 +28,29 @@ public class Comp_agent_float_move_child : Agent
         scoreCalculator = FindObjectOfType<ScoreCalculator>();
         aI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         acavaAcademy = FindObjectOfType<AcavaAcademy>();
+        agentsChild = FindObjectsOfType<Comp_agent_float_move_child>();
 
+        //if (webtraining == false)
+        //{
+        //    cameraPaint = Camera.main;
+        //    cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
 
-        if (webtraining == false)
-        {
-            cameraPaint = Camera.main;
-            cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
+        //    CameraSensorComponent[] camerasensors = gameObject.GetComponents<CameraSensorComponent>();
 
-            CameraSensorComponent[] camerasensors = gameObject.GetComponents<CameraSensorComponent>();
+        //    for (int i = 0; i < camerasensors.Length; i++)
+        //    {
 
-            for (int i = 0; i < camerasensors.Length; i++)
-            {
+        //        if (camerasensors[i].SensorName == "CameraPaint")
+        //        {
+        //            camerasensors[i].Camera = cameraPaint;
+        //        }
 
-                if (camerasensors[i].SensorName == "CameraPaint")
-                {
-                    camerasensors[i].Camera = cameraPaint;
-                }
-
-                if (camerasensors[i].SensorName == "CameraSensor")
-                {
-                    camerasensors[i].Camera = cameraTop;
-                }
-            }
-        }
+        //        if (camerasensors[i].SensorName == "CameraSensor")
+        //        {
+        //            camerasensors[i].Camera = cameraTop;
+        //        }
+        //    }
+        //}
     }
 
     public void PullTrigger(Collider other)
@@ -73,10 +74,31 @@ public class Comp_agent_float_move_child : Agent
     {
 
         ChildTrigger child = GetComponentInChildren<ChildTrigger>();
+        TagMeElementOfComposition TagChild = GetComponentInChildren<TagMeElementOfComposition>();
+
+        CalculateVolumeOfElementComp VolChild = GetComponentInChildren<CalculateVolumeOfElementComp>();
         GameObject itemChild = child.gameObject;
+
+        float Distance = 0.0f;
+
+        for (int i = 0; i < agentsChild.Length; i++)
+        {
+
+            if (agentsChild[i].GetComponentInChildren<TagMeElementOfComposition>() != TagChild)
+            {
+
+                TagMeElementOfComposition tag = agentsChild[i].GetComponentInChildren<TagMeElementOfComposition>();
+                GameObject otherItem = tag.gameObject;
+
+                Distance += Vector3.Distance(transform.position, otherItem.transform.position);
+            }
+        }
         
         if (useVectorObs)
         {
+            sensor.AddObservation(Distance); // +1
+            sensor.AddObservation(VolChild.Volume); // +1
+            sensor.AddObservation(TagChild.ElementOfCompositionID); // +1
             sensor.AddObservation(itemChild.transform.rotation.y);
             sensor.AddObservation(itemChild.transform.position);
             sensor.AddObservation(centerPoint.transform.position - itemChild.transform.position);
@@ -140,21 +162,23 @@ public class Comp_agent_float_move_child : Agent
             scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
             scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
 
+            //scoreFinalOut = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
+            //if (scoreCalculator.scoreUnityVisual == 0.0f)
+            //{
+            //    scoreFinalOut = scoreFinalOut * 0.5f;
+            //}
         }
-
+        
         else
         {
             scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
-
-
-            //float visualScoreBalancePixelsCount = scoreCalculator.visualScoreBalancePixelsCount;
-            //float scoreLawOfLever = scoreCalculator.scoreLawOfLever;
-            //float scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
-
-            //scoreFinalOut = (scoreUnityVisual + visualScoreBalancePixelsCount + scoreLawOfLever + scoreIsolationBalance) / 4;
-
             scoreFinalOut = scoreCalculator.scoreFinalOut;
-            
+
+            //scoreFinalOut = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
+            //if (scoreCalculator.scoreUnityVisual == 0.0f)
+            //{
+            //    scoreFinalOut = scoreFinalOut * 0.5f;
+            //}
         }
 
 
@@ -183,7 +207,8 @@ public class Comp_agent_float_move_child : Agent
         if (scoreUnityVisual == 0)
         {
             if (aI_Calculator_score.inferenceMode == false)
-                AddReward(-1 / MaxStep);
+                AddReward(-10 / MaxStep);
+                //AddReward(-0.5f);
         }
 
     }

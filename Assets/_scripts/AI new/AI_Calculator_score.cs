@@ -5,6 +5,7 @@ using System.Collections;
 using UnityEngine.UI;
 using Unity.MLAgents;
 using System.Diagnostics.Eventing.Reader;
+using Lean.Touch;
 
 public class AI_Calculator_score : MonoBehaviour
 {
@@ -17,15 +18,15 @@ public class AI_Calculator_score : MonoBehaviour
     public float target = 0.95f;
     public bool movetotarget = true;
     public bool inferenceMode = false;
-    public int timeTutorial = 120;
+    
     public GameObject you;
     public GameObject AI;
 
     public bool playerButtonOK { get; set; }
-    private bool AIturn = false;
+    public bool AIturn = false;
 
     private int steps = 6;
-    private int frames = 0;
+    public int frames = 0;
     private OpenCVManager openCVManager;
     private GameVisualManager gameManagerNotOpenCV;
     private BarracudaCNNModel barracudaCNNModel;
@@ -33,12 +34,13 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaOpenCvFeature barracudaOpenCvFeature;
     private BarracudaFinalOut barracudaFinalOut;
     private Comp_agent_float_move_child[] agents;
-    private float currentScore;
+    public float currentScore;
     private Image youColor;
     private Image AIColor;
     private float currentScoreAI;
     private float currentScorePLAYER;
     private ScoreGameAI ScoreGameAI;
+    private LeanTouch leanTouch;
 
     public event Action<int> OnFramesCountChanged;
 
@@ -57,6 +59,7 @@ public class AI_Calculator_score : MonoBehaviour
         agents = FindObjectsOfType<Comp_agent_float_move_child>();
         youColor = you.GetComponent<Image>();
         AIColor = AI.GetComponent<Image>();
+        leanTouch = FindObjectOfType<LeanTouch>();
 
         playerButtonOK = false;
 
@@ -71,6 +74,8 @@ public class AI_Calculator_score : MonoBehaviour
 
     private void Handle_OnScoreFinalOutChanged(float score)
     {
+        Debug.Log(score);
+        Debug.Log("score from event");
         currentScore = score;
     }
 
@@ -115,7 +120,6 @@ public class AI_Calculator_score : MonoBehaviour
 
             if (playerButtonOK == true) 
             {
-                //frames = maxFramesForRound + timeTutorial;
                 frames = maxFramesForRound;
                 playerButtonOK = false;
             }
@@ -124,6 +128,7 @@ public class AI_Calculator_score : MonoBehaviour
 
         if (AIturn == true)
         {
+            leanTouch.enabled = false;
 
             youColor.color = new Color(256, 256, 256);
             AIColor.color = new Color(256, 0, 0);
@@ -140,18 +145,6 @@ public class AI_Calculator_score : MonoBehaviour
 
             if (currentScore >= target)
             {
-                //AIturn = false;
-
-                //frames = maxFramesForRound + timeTutorial;
-
-                
-
-                //for (int i = 0; i < agents.Length; i++)
-                //{
-                //    //agents[i].ResetEnviromentFromPlayMode();
-                //    agents[i].enabled = false;
-                //}
-
                 frames = maxFramesForRound;
             }
 
@@ -195,6 +188,8 @@ public class AI_Calculator_score : MonoBehaviour
             ChildTrigger item = agents[i].GetComponentInChildren<ChildTrigger>();
             item.transform.position = spawnLocation;
         }
+
+        leanTouch.enabled = true;
     }
 
     private void CallToCalculateScores()

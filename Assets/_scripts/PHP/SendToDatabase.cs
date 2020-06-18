@@ -185,6 +185,7 @@ public class SendToDatabase : MonoBehaviour
         sequence = "";
         genesString = "";
 
+        listOfelementsInComposition = gamePopulationController.ElementsCompositions;
 
         foreach (GameObject element in listOfelementsInComposition)
         {
