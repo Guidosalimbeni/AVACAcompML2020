@@ -42,6 +42,7 @@ public class AI_Calculator_score : MonoBehaviour
     private float currentScorePLAYER;
     private ScoreGameAI ScoreGameAI;
     private LeanTouch leanTouch;
+    private AudioSource robotSound;
 
     public event Action<int> OnFramesCountChanged;
 
@@ -61,6 +62,7 @@ public class AI_Calculator_score : MonoBehaviour
         youColor = you.GetComponent<Image>();
         AIColor = AI.GetComponent<Image>();
         leanTouch = FindObjectOfType<LeanTouch>();
+        robotSound = GetComponent<AudioSource>();
 
         playerButtonOK = false;
 
@@ -124,6 +126,7 @@ public class AI_Calculator_score : MonoBehaviour
         if (AIturn == true)
         {
             leanTouch.enabled = false;
+            robotSound.Play();
 
             youColor.color = new Color(256, 256, 256);
             AIColor.color = new Color(0, 200, 0);
@@ -149,6 +152,8 @@ public class AI_Calculator_score : MonoBehaviour
 
         if (frames == maxFramesForRound)
         {
+
+            robotSound.Stop();
 
             if (AIturn == true)
             {

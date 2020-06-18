@@ -21,9 +21,10 @@ public class ScoreGameAI : MonoBehaviour
     private BarracudaFinalOut barracudaFinalOut;
     private int ScorePointAI = 0;
     private int ScorePointPlayer = 0;
-    
 
     
+    private AudioSource point;
+
 
     private void Awake()
     {
@@ -31,6 +32,8 @@ public class ScoreGameAI : MonoBehaviour
         PlayertextPoint.text = string.Format("{0}", 0);
         barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
         barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+        point = GetComponent<AudioSource>();
+        
     }
 
     
@@ -40,9 +43,6 @@ public class ScoreGameAI : MonoBehaviour
         ScorePanel.SetActive(true);
         YOUSCORED.text = string.Format("YOU {0} %", playerScore.ToString("F2"));
         AISCORED.text = string.Format("AI {0} %", AIScore.ToString("F2"));
-
-        
-
     }
 
     public void UpdatePointScores(float playerScore, float AIScore)
@@ -51,6 +51,7 @@ public class ScoreGameAI : MonoBehaviour
         {
             ScorePointPlayer++;
             playerWinAnim.SetTrigger("playerWin");
+            point.Play();
 
         }
 
@@ -58,7 +59,7 @@ public class ScoreGameAI : MonoBehaviour
         {
             ScorePointAI++;
             AiWinAnim.SetTrigger("AiWin");
-
+            point.Play();
         }
 
         AItextPoint.text = string.Format("{0}", ScorePointAI);
