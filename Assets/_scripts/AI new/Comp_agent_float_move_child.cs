@@ -9,6 +9,7 @@ public class Comp_agent_float_move_child : Agent
 
     public bool useVectorObs;
     public float speed = 10.0f;
+    public bool WEBbuild = false;
     //public bool webtraining = false;
     private ScoreCalculator scoreCalculator;
     private AI_Calculator_score aI_Calculator_score;
@@ -159,26 +160,40 @@ public class Comp_agent_float_move_child : Agent
 
         if (aI_Calculator_score.inferenceMode == false)
         {
-            scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
-            scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
+            if (WEBbuild == false)
+            {
+                scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
+                scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
+            }
+            
 
-            //scoreFinalOut = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
-            //if (scoreCalculator.scoreUnityVisual == 0.0f)
-            //{
-            //    scoreFinalOut = scoreFinalOut * 0.5f;
-            //}
+            if (WEBbuild)
+            {
+                scoreFinalOut = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
+                if (scoreCalculator.scoreUnityVisual == 0.0f)
+                {
+                    scoreFinalOut = scoreFinalOut * 0.5f;
+                }
+            }
+
         }
         
         else
         {
-            scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
-            scoreFinalOut = scoreCalculator.scoreFinalOut;
+            if (WEBbuild == false)
+            {
+                scoreFinalOut = scoreCalculator.scoreFinalOut; // top reward
+                scoreUnityVisual = scoreCalculator.scoreUnityVisual; // for collisions
+            }
 
-            //scoreFinalOut = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
-            //if (scoreCalculator.scoreUnityVisual == 0.0f)
-            //{
-            //    scoreFinalOut = scoreFinalOut * 0.5f;
-            //}
+            if (WEBbuild)
+            {
+                scoreFinalOut = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
+                if (scoreCalculator.scoreUnityVisual == 0.0f)
+                {
+                    scoreFinalOut = scoreFinalOut * 0.5f;
+                }
+            }
         }
 
 

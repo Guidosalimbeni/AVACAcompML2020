@@ -3681,6 +3681,7 @@ MonoBehaviour:
   MaxStep: 0
   useVectorObs: 1
   speed: 10
+  WEBbuild: 1
   centerPoint: {fileID: 7662460538323391626}
 --- !u!114 &663420135
 MonoBehaviour:
@@ -5163,6 +5164,7 @@ MonoBehaviour:
   MaxStep: 0
   useVectorObs: 1
   speed: 10
+  WEBbuild: 1
   centerPoint: {fileID: 7662460538323391626}
 --- !u!1 &968100065
 GameObject:
@@ -5996,6 +5998,7 @@ MonoBehaviour:
   MaxStep: 0
   useVectorObs: 1
   speed: 10
+  WEBbuild: 1
   centerPoint: {fileID: 7662460538323391626}
 --- !u!114 &1068537194
 MonoBehaviour:
@@ -9350,7 +9353,6 @@ MonoBehaviour:
   you: {fileID: 331298066}
   AI: {fileID: 1630493254}
   PauseTimeForScore: 3
-  currentScore: 0
 --- !u!114 &1778068980
 MonoBehaviour:
   m_ObjectHideFlags: 0

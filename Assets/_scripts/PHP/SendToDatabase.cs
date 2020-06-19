@@ -90,10 +90,34 @@ public class SendToDatabase : MonoBehaviour
 
         ListOfInfoForDatabase.Clear();
 
-        StartCoroutine(PostData(LoadSceneInputUsername.username)); //TO FIX
+        //StartCoroutine(PostData(LoadSceneInputUsername.username)); //TO FIX
 
+        string user = "player";
+        StartCoroutine(PostData(user));
     }
-    
+
+    public void PostDataForAI()
+    {
+        UpdateActualListOfInfoForDatabase();
+
+        //scoreBoundsBalance = scoreCalculator.scoreBoundsBalance;
+        scoreUnityVisual = scoreCalculator.scoreUnityVisual;
+        scorePixelsBalance = scoreCalculator.visualScoreBalancePixelsCount;
+        scoreLawOfLever = scoreCalculator.scoreLawOfLever;
+        scoreIsolationBalance = scoreCalculator.scoreIsolationBalance;
+        scoreAllscorefeatures = scoreCalculator.scoreAllscorefeatures;
+        scoreNNFrontTop = scoreCalculator.scoreNNFrontTop;
+        scoreMobileNet = scoreCalculator.scoreMobileNet;
+        scoreFinalOut = scoreCalculator.scoreFinalOut;
+
+        judge = 1;
+
+        ListOfInfoForDatabase.Clear();
+
+        string user = "AI";
+        StartCoroutine(PostData(user));
+    }
+
     public void PostDataFromSnapShot(int scoreFromButton)
     {
         UpdateActualListOfInfoForDatabase();

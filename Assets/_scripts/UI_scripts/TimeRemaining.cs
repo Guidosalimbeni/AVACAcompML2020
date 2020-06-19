@@ -7,6 +7,7 @@ public class TimeRemaining : MonoBehaviour
 {
     public Image progressbar;
     
+    
     AI_Calculator_score AI_Calculator_score;
     private int maxFrames;
     //private int timeTutorial;
@@ -26,6 +27,7 @@ public class TimeRemaining : MonoBehaviour
         {
             float progress = map(frames, 0, maxFrames, 0, 1.0f);
             progressbar.fillAmount = 1 - progress;
+            
         }
         
     }

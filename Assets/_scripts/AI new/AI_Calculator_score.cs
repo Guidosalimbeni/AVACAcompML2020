@@ -35,7 +35,7 @@ public class AI_Calculator_score : MonoBehaviour
     private BarracudaOpenCvFeature barracudaOpenCvFeature;
     private BarracudaFinalOut barracudaFinalOut;
     private Comp_agent_float_move_child[] agents;
-    public float currentScore;
+    private float currentScore;
     private Image youColor;
     private Image AIColor;
     private float currentScoreAI;
@@ -43,6 +43,7 @@ public class AI_Calculator_score : MonoBehaviour
     private ScoreGameAI ScoreGameAI;
     private LeanTouch leanTouch;
     private AudioSource robotSound;
+    private SendToDatabase sendToDatabase;
 
     public event Action<int> OnFramesCountChanged;
 
@@ -63,6 +64,7 @@ public class AI_Calculator_score : MonoBehaviour
         AIColor = AI.GetComponent<Image>();
         leanTouch = FindObjectOfType<LeanTouch>();
         robotSound = GetComponent<AudioSource>();
+        sendToDatabase = FindObjectOfType<SendToDatabase>();
 
         playerButtonOK = false;
 
@@ -158,11 +160,15 @@ public class AI_Calculator_score : MonoBehaviour
             if (AIturn == true)
             {
                 currentScoreAI = currentScore;
+
+                sendToDatabase.PostDataForAI();
+
                 StartCoroutine(PauseGame(PauseTimeForScore));
             }
 
             if (AIturn == false)
             {
+                sendToDatabase.PostDataForPositiveJudge();
                 currentScorePLAYER = currentScore;
                 
             }
