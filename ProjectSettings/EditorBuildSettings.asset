@@ -23,7 +23,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_scenes/04_games_of_composition.unity
     guid: 44587ac9a440ae34db62ab379e20b0d0
-  - enabled: 0
+  - enabled: 1
     path: Assets/_scenes/09_games_of_composition_float_inference_3_item 1 cam.unity
     guid: 30f0eb894058c8042847a2cd729cdd39
   - enabled: 0
@@ -33,7 +33,7 @@ EditorBuildSettings:
     path: Assets/_scenes/backup/09_games_of_composition_float_inference_3_item_android_2cam
       GAME.unity
     guid: 560f6e226c7af434a8f3c9f47c51edf5
-  - enabled: 1
+  - enabled: 0
     path: Assets/_scenes/09_games_of_composition_float_inference_3_item 1 cam WEB.unity
     guid: 67edcca197992304aa5f2fa0d00c7f99
   m_configObjects: {}

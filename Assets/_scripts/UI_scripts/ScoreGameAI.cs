@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.Advertisements;
-using System.Security.Permissions;
 
 public class ScoreGameAI : MonoBehaviour
 {
@@ -18,25 +16,34 @@ public class ScoreGameAI : MonoBehaviour
     public Animator playerWinAnim;
     public Animator AiWinAnim;
 
-    private BarracudaFinalOut barracudaFinalOut;
     private int ScorePointAI = 0;
     private int ScorePointPlayer = 0;
 
-    
     private AudioSource point;
 
+    private AI_Calculator_score aI_Calculator_Score;
 
     private void Awake()
     {
         AItextPoint.text = string.Format("{0}", 0);
         PlayertextPoint.text = string.Format("{0}", 0);
-        barracudaFinalOut = FindObjectOfType<BarracudaFinalOut>();
-        barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+        aI_Calculator_Score = FindObjectOfType<AI_Calculator_score>();
+
         point = GetComponent<AudioSource>();
-        
+
+
+        aI_Calculator_Score.OnCurrentScoreChanged += Handle_OnCurrentScoreChanged;
     }
 
-    
+    private void Handle_OnCurrentScoreChanged(float currentScore)
+    {
+        float scoreFinalOut = currentScore;
+
+        progressbar.fillAmount = scoreFinalOut;
+        text.text = string.Format("{0}%", (scoreFinalOut * 100).ToString("F2"));
+    }
+
+
 
     public void ShowResult(float playerScore, float AIScore)
     {
@@ -73,24 +80,6 @@ public class ScoreGameAI : MonoBehaviour
         ScorePanel.SetActive(false);
     }
 
-    private void Handle_OnScoreFinalOutChanged(float scoreFinalOutPassed)
-    {
-        float  scoreFinalOut = scoreFinalOutPassed;
-        //float score = 0.0f;
-        //float thresh = 0.99f;
-        //if (scoreFinalOut < thresh)
-        //{
-        //    score = map(scoreFinalOut, 0, thresh, 0, 0.85f);
-        //}
-        //else
-        //{
-        //    score = map(scoreFinalOut, thresh, 1, 0.85f, 1f);
-        //}
-
-        progressbar.fillAmount = scoreFinalOut;
-        text.text = string.Format("{0}%", (scoreFinalOut * 100).ToString("F2"));
-        
-    }
 
     private float map(float s, float a1, float a2, float b1, float b2)
     {
@@ -99,6 +88,6 @@ public class ScoreGameAI : MonoBehaviour
 
     private void OnDisable()
     {
-        barracudaFinalOut.OnScoreFinalOutChanged -= Handle_OnScoreFinalOutChanged;
+        aI_Calculator_Score.OnCurrentScoreChanged -= Handle_OnCurrentScoreChanged;
     }
 }

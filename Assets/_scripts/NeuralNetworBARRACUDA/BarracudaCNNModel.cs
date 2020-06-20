@@ -46,7 +46,8 @@ public class BarracudaCNNModel : MonoBehaviour
         //normTxt = new Texture2D(W, H, TextureFormat.RGB24, false);
         //var model = ModelLoader.Load(modelSource);
         //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
-        worker = WorkerFactory.CreateWorker(model);
+        if (model != null)
+            worker = WorkerFactory.CreateWorker(model);
     }
 
     // call from leantouch and population manager one during breeding and one for last move

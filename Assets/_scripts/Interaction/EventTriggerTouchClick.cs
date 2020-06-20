@@ -6,6 +6,8 @@ namespace Lean.Touch
     public class EventTriggerTouchClick : MonoBehaviour
     {
 
+        public AudioSource movesound;
+
         private OpenCVManager openCVManager;
         private GameVisualManager gameManagerNotOpenCV;
 
@@ -83,6 +85,7 @@ namespace Lean.Touch
         public void OnFingerUp(LeanFinger finger) ///
         {
 
+            movesound.Play();
             //Debug.Log("Finger " + finger.Index + " finished touching the screen");
 
             openCVManager.CallForOpenCVCalculationUpdates();

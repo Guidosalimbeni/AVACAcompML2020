@@ -33,9 +33,11 @@ public class BarracudaFinalOut : MonoBehaviour
     }
     private void Start()
     {
-        
+
         //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
-        worker = WorkerFactory.CreateWorker(model);
+        //worker = WorkerFactory.CreateWorker(model);
+        if (model != null)
+            worker = WorkerFactory.CreateWorker(model);
     }
 
     // call from leantouch and population manager one during breeding and one for last move

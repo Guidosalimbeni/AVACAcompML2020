@@ -33,10 +33,11 @@ public class BarracudaOpenCvFeature : MonoBehaviour
     }
     private void Start()
     {
-         
+
         //worker = BarracudaWorkerFactory.CreateWorker(BarracudaWorkerFactory.Type.ComputePrecompiled, model);
         //worker = WorkerFactory.CreateWorker(WorkerFactory.Type.ComputePrecompiled, model);
-        worker = WorkerFactory.CreateWorker(model);
+        if (model != null)
+            worker = WorkerFactory.CreateWorker(model);
     }
 
     // call from leantouch and population manager one during breeding and one for last move

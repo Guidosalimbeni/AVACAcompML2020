@@ -22,6 +22,7 @@ public class AI_Calculator_score : MonoBehaviour
     public GameObject you;
     public GameObject AI;
     public float PauseTimeForScore = 3.0f;
+    
 
     public bool playerButtonOK { get; set; }
     private bool AIturn = false;
@@ -44,9 +45,13 @@ public class AI_Calculator_score : MonoBehaviour
     private LeanTouch leanTouch;
     private AudioSource robotSound;
     private SendToDatabase sendToDatabase;
+    private bool WEBbuild;
+    private ScoreCalculator scoreCalculator;
+
 
     public event Action<int> OnFramesCountChanged;
 
+    public event Action<float> OnCurrentScoreChanged;
 
     public bool buttonRunRobot { get; set; }
 
@@ -65,21 +70,45 @@ public class AI_Calculator_score : MonoBehaviour
         leanTouch = FindObjectOfType<LeanTouch>();
         robotSound = GetComponent<AudioSource>();
         sendToDatabase = FindObjectOfType<SendToDatabase>();
+        scoreCalculator = FindObjectOfType<ScoreCalculator>();
 
         playerButtonOK = false;
 
         for (int i = 0; i < agents.Length; i++)
         {
             steps = agents[i].GetComponent<DecisionRequester>().DecisionPeriod; // they are all the same so taking last one
+            WEBbuild = agents[i].WEBbuild;
         }
 
-        barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+        if (WEBbuild == false)
+        {
+            barracudaFinalOut.OnScoreFinalOutChanged += Handle_OnScoreFinalOutChanged;
+        }
 
+        if (WEBbuild == true)
+        {
+            openCVManager.OnPixelsCountBalanceChanged += Handle_OnPixelsCountBalanceChanged;
+        }
+        
+
+    }
+
+    private void Handle_OnPixelsCountBalanceChanged(float score) // just to fire... this is a quick hack to to the web build
+    {
+        currentScore = (scoreCalculator.visualScoreBalancePixelsCount + scoreCalculator.scoreUnityVisual + scoreCalculator.scoreIsolationBalance + scoreCalculator.scoreLawOfLever) / 4;
+        if (scoreCalculator.scoreUnityVisual == 0.0f)
+        {
+            currentScore = currentScore * 0.5f;
+        }
+
+        OnCurrentScoreChanged?.Invoke(currentScore);
     }
 
     private void Handle_OnScoreFinalOutChanged(float score)
     {
         currentScore = score;
+
+        OnCurrentScoreChanged?.Invoke(currentScore);
     }
 
     private void FixedUpdate()
@@ -128,7 +157,7 @@ public class AI_Calculator_score : MonoBehaviour
         if (AIturn == true)
         {
             leanTouch.enabled = false;
-            robotSound.Play();
+            
 
             youColor.color = new Color(256, 256, 256);
             AIColor.color = new Color(0, 200, 0);
@@ -140,6 +169,7 @@ public class AI_Calculator_score : MonoBehaviour
 
             if (frames % steps == 0)
             {
+                robotSound.Play();
                 CallToCalculateScores();
             }
 
@@ -170,7 +200,8 @@ public class AI_Calculator_score : MonoBehaviour
             {
                 sendToDatabase.PostDataForPositiveJudge();
                 currentScorePLAYER = currentScore;
-                
+                ShuffleItemPositionWithAgentEnable();
+
             }
 
 
@@ -179,6 +210,7 @@ public class AI_Calculator_score : MonoBehaviour
                 agents[i].enabled = !agents[i].enabled;
             }
 
+            
             AIturn = !AIturn;
             frames = 0;
             currentScore = 0.0f;
@@ -197,6 +229,7 @@ public class AI_Calculator_score : MonoBehaviour
 
         leanTouch.enabled = true;
     }
+
 
     private void CallToCalculateScores()
     {
@@ -226,7 +259,13 @@ public class AI_Calculator_score : MonoBehaviour
 
     }
 
-    
-    
+    private void OnDisable()
+    {
+        openCVManager.OnPixelsCountBalanceChanged -= Handle_OnPixelsCountBalanceChanged;
+        barracudaFinalOut.OnScoreFinalOutChanged -= Handle_OnScoreFinalOutChanged;
+    }
+
+
+
 
 }
