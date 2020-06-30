@@ -39,14 +39,19 @@ public class ScoreGameAI : MonoBehaviour
     {
         float scoreFinalOut = currentScore;
 
-        progressbar.fillAmount = scoreFinalOut;
-        text.text = string.Format("{0}%", (scoreFinalOut * 100).ToString("F2"));
+        if (aI_Calculator_Score.inferenceMode == true)
+        {
+            progressbar.fillAmount = scoreFinalOut;
+            text.text = string.Format("{0}%", (scoreFinalOut * 100).ToString("F2"));
+        }
+        
     }
 
 
 
     public void ShowResult(float playerScore, float AIScore)
     {
+        Debug.Log(" I am here");
         ScorePanel.SetActive(true);
         YOUSCORED.text = string.Format("YOU {0} %", playerScore.ToString("F2"));
         AISCORED.text = string.Format("AI {0} %", AIScore.ToString("F2"));

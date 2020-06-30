@@ -84,8 +84,8 @@ namespace Lean.Touch
 
         public void OnFingerUp(LeanFinger finger) ///
         {
-
-            movesound.Play();
+            if (movesound != null)
+                movesound.Play();
             //Debug.Log("Finger " + finger.Index + " finished touching the screen");
 
             openCVManager.CallForOpenCVCalculationUpdates();

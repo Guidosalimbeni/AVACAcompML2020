@@ -23,12 +23,16 @@ public class TimeRemaining : MonoBehaviour
 
     private void Handle_OnFramesCountChanged(int frames)
     {
-        if (maxFrames > 0)
+        if (AI_Calculator_score.inferenceMode == true)
         {
-            float progress = map(frames, 0, maxFrames, 0, 1.0f);
-            progressbar.fillAmount = 1 - progress;
-            
+            if (maxFrames > 0)
+            {
+                float progress = map(frames, 0, maxFrames, 0, 1.0f);
+                progressbar.fillAmount = 1 - progress;
+
+            }
         }
+        
         
     }
 

@@ -210,7 +210,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AutoGetDefaultColor: 0
   DefaultColor: {r: 1, g: 1, b: 1, a: 1}
-  SelectedColor: {r: 0, g: 0.65743715, b: 0.8490566, a: 1}
+  SelectedColor: {r: 0.7977483, g: 0.8447746, b: 0.8584906, a: 1}
   CloneMaterials: 1
 --- !u!114 &9014266956581852073
 MonoBehaviour:

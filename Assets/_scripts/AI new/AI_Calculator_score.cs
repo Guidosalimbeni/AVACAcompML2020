@@ -22,12 +22,13 @@ public class AI_Calculator_score : MonoBehaviour
     public GameObject you;
     public GameObject AI;
     public float PauseTimeForScore = 3.0f;
-    
+    public bool DATABASE_manual = false;
+    public bool alternateMove = false;
 
     public bool playerButtonOK { get; set; }
     private bool AIturn = false;
 
-    private int steps = 6;
+    public int steps = 6;
     private int frames = 0;
     private OpenCVManager openCVManager;
     private GameVisualManager gameManagerNotOpenCV;
@@ -47,6 +48,7 @@ public class AI_Calculator_score : MonoBehaviour
     private SendToDatabase sendToDatabase;
     private bool WEBbuild;
     private ScoreCalculator scoreCalculator;
+    public int agentNumberTurn { get; set; }
 
 
     public event Action<int> OnFramesCountChanged;
@@ -57,6 +59,7 @@ public class AI_Calculator_score : MonoBehaviour
 
     private void Awake()
     {
+        agentNumberTurn = 1;
         ScoreGameAI = FindObjectOfType<ScoreGameAI>();
         openCVManager = FindObjectOfType<OpenCVManager>();
         gameManagerNotOpenCV = FindObjectOfType<GameVisualManager>();
@@ -76,7 +79,7 @@ public class AI_Calculator_score : MonoBehaviour
 
         for (int i = 0; i < agents.Length; i++)
         {
-            steps = agents[i].GetComponent<DecisionRequester>().DecisionPeriod; // they are all the same so taking last one
+            //steps = agents[i].GetComponent<DecisionRequester>().DecisionPeriod; // they are all the same so taking last one
             WEBbuild = agents[i].WEBbuild;
         }
 
@@ -121,6 +124,16 @@ public class AI_Calculator_score : MonoBehaviour
             if (frames % steps == 0)
             {
                 CallToCalculateScores();
+
+                if (alternateMove)
+                {
+                    agentNumberTurn++;
+
+                    if (agentNumberTurn > agents.Length)
+                    {
+                        agentNumberTurn = 0;
+                    }
+                }
             }
         }
 
@@ -146,11 +159,15 @@ public class AI_Calculator_score : MonoBehaviour
                 agents[i].enabled = false;
             }
 
-            if (playerButtonOK == true) 
+            if (DATABASE_manual == false) // not really used but left here in case since it is working..
             {
-                frames = maxFramesForRound;
-                playerButtonOK = false;
+                if (playerButtonOK == true)
+                {
+                    frames = maxFramesForRound;
+                    playerButtonOK = false;
+                }
             }
+            
 
         }
 
@@ -191,14 +208,16 @@ public class AI_Calculator_score : MonoBehaviour
             {
                 currentScoreAI = currentScore;
 
-                sendToDatabase.PostDataForAI();
+                if (DATABASE_manual == false)
+                    sendToDatabase.PostDataForAI();
 
                 StartCoroutine(PauseGame(PauseTimeForScore));
             }
 
             if (AIturn == false)
             {
-                sendToDatabase.PostDataForPositiveJudge();
+                if (DATABASE_manual == false)
+                    sendToDatabase.PostDataForPositiveJudge();
                 currentScorePLAYER = currentScore;
                 ShuffleItemPositionWithAgentEnable();
 

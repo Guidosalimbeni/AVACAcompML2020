@@ -10,18 +10,18 @@ public class Comp_agent_float_move_child : Agent
     public bool useVectorObs;
     public float speed = 10.0f;
     public bool WEBbuild = false;
-    //public bool webtraining = false;
+    
     private ScoreCalculator scoreCalculator;
     private AI_Calculator_score aI_Calculator_score;
     private bool targetReached = false;
     private Vector3 targetPosition;
-    //private Camera cameraPaint;
-    //private Camera cameraTop;
     public Transform centerPoint;
     private AcavaAcademy acavaAcademy;
     private float scoreFinalOut;
     private float scoreUnityVisual;
     private Comp_agent_float_move_child[] agentsChild;
+    private int myAgentNumber;
+    private Agent_number Agent_number;
 
     private void Awake()
     {
@@ -30,28 +30,8 @@ public class Comp_agent_float_move_child : Agent
         aI_Calculator_score = FindObjectOfType<AI_Calculator_score>();
         acavaAcademy = FindObjectOfType<AcavaAcademy>();
         agentsChild = FindObjectsOfType<Comp_agent_float_move_child>();
-
-        //if (webtraining == false)
-        //{
-        //    cameraPaint = Camera.main;
-        //    cameraTop = GameObject.Find("renderCam[NN_Top]").GetComponent<Camera>();
-
-        //    CameraSensorComponent[] camerasensors = gameObject.GetComponents<CameraSensorComponent>();
-
-        //    for (int i = 0; i < camerasensors.Length; i++)
-        //    {
-
-        //        if (camerasensors[i].SensorName == "CameraPaint")
-        //        {
-        //            camerasensors[i].Camera = cameraPaint;
-        //        }
-
-        //        if (camerasensors[i].SensorName == "CameraSensor")
-        //        {
-        //            camerasensors[i].Camera = cameraTop;
-        //        }
-        //    }
-        //}
+        Agent_number = GetComponent<Agent_number>();
+        myAgentNumber = Agent_number.agentNumber;
     }
 
     public void PullTrigger(Collider other)
@@ -222,7 +202,7 @@ public class Comp_agent_float_move_child : Agent
         if (scoreUnityVisual == 0)
         {
             if (aI_Calculator_score.inferenceMode == false)
-                AddReward(-10 / MaxStep);
+                AddReward(-1 / MaxStep);
                 //AddReward(-0.5f);
         }
 
@@ -232,7 +212,21 @@ public class Comp_agent_float_move_child : Agent
     {
         if (aI_Calculator_score.inferenceMode == false)
             AddReward(-1f / MaxStep);
-        MoveAgent(vectorAction); 
+
+        if (aI_Calculator_score.alternateMove)
+        {
+            if (aI_Calculator_score.agentNumberTurn == myAgentNumber)
+            {
+                MoveAgent(vectorAction);
+            }
+        }
+
+        else
+        {
+            MoveAgent(vectorAction);
+        }
+        
+        
     }
 
 

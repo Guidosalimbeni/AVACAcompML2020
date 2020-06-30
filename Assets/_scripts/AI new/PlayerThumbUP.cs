@@ -13,7 +13,7 @@ public class PlayerThumbUP : MonoBehaviour
 
     public void ThumbUpPlayerAcceptComposition() 
     {
-        aI_Calculator_Score.playerButtonOK = true;
+        aI_Calculator_Score.playerButtonOK = true; // not used
 
     }
 
