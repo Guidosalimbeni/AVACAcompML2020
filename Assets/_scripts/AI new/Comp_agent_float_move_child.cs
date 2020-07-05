@@ -107,27 +107,33 @@ public class Comp_agent_float_move_child : Agent
                     PosZ);
 
                     float step = speed * Time.deltaTime;
-                    itemChild.transform.position = Vector3.MoveTowards(itemChild.transform.position, targetPosition, step);
-                    itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
+                    if (itemChild != null)
+                    {
+                        itemChild.transform.position = Vector3.MoveTowards(itemChild.transform.position, targetPosition, step);
+                        itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
+                    }
+                    
                 }
                 else
+                {
+                    if (itemChild != null)
+                    {
+                        itemChild.transform.position = new Vector3(posX, itemChild.transform.position.y,PosZ);
+                        itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
+                    }
+                }
+            }
+
+            else
+            {
+                if (itemChild != null)
                 {
                     itemChild.transform.position = new Vector3(posX,
                     itemChild.transform.position.y,
                     PosZ);
                     itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
                 }
-
             }
-
-            else
-            {
-                itemChild.transform.position = new Vector3(posX,
-                    itemChild.transform.position.y,
-                    PosZ);
-                itemChild.transform.rotation = Quaternion.Euler(0f, rotateY * 360, 0f);
-            }
-
         }
 
         FireScoreCalculation();
@@ -176,6 +182,16 @@ public class Comp_agent_float_move_child : Agent
             }
         }
 
+        if (aI_Calculator_score.inferenceMode == false)
+        {
+            if (scoreFinalOut > aI_Calculator_score.target * 0.80)
+            {
+                Debug.Log(" halfway");
+                AddReward(1 / MaxStep);
+
+            }
+        }
+       
 
         if (scoreFinalOut > aI_Calculator_score.target)
         {

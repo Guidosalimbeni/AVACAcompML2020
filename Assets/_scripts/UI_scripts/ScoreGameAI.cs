@@ -51,7 +51,6 @@ public class ScoreGameAI : MonoBehaviour
 
     public void ShowResult(float playerScore, float AIScore)
     {
-        Debug.Log(" I am here");
         ScorePanel.SetActive(true);
         YOUSCORED.text = string.Format("YOU {0} %", playerScore.ToString("F2"));
         AISCORED.text = string.Format("AI {0} %", AIScore.ToString("F2"));

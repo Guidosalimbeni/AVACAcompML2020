@@ -48,7 +48,7 @@ public class AI_Calculator_score : MonoBehaviour
     private SendToDatabase sendToDatabase;
     private bool WEBbuild;
     private ScoreCalculator scoreCalculator;
-    public int agentNumberTurn { get; set; }
+    public int agentNumberTurn;
 
 
     public event Action<int> OnFramesCountChanged;
@@ -59,7 +59,7 @@ public class AI_Calculator_score : MonoBehaviour
 
     private void Awake()
     {
-        agentNumberTurn = 1;
+        agentNumberTurn = 0;
         ScoreGameAI = FindObjectOfType<ScoreGameAI>();
         openCVManager = FindObjectOfType<OpenCVManager>();
         gameManagerNotOpenCV = FindObjectOfType<GameVisualManager>();
@@ -139,7 +139,22 @@ public class AI_Calculator_score : MonoBehaviour
 
         if (inferenceMode == true)
         {
-            PlayGameLogic();
+            if (frames % steps == 0)
+            {
+                if (alternateMove)
+                {
+                    agentNumberTurn++;
+
+                    if (agentNumberTurn > agents.Length)
+                    {
+                        agentNumberTurn = 0;
+                    }
+                }
+
+                PlayGameLogic();
+
+            }
+                
 
         }
 

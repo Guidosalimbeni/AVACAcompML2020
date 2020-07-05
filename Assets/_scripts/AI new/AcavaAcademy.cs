@@ -27,15 +27,18 @@ public class AcavaAcademy : MonoBehaviour
 
     public void EnvironmentReset(Comp_agent_float_move_child agent)
     {
-        TagMeElementOfComposition elem = agent.GetComponentInChildren<TagMeElementOfComposition>();
-        
-        if(elem != null)
+        if(agent != null)
         {
-            GameObject itemGO = elem.gameObject;
-            Destroy(itemGO);
-            
-        }
+            TagMeElementOfComposition elem = agent.GetComponentInChildren<TagMeElementOfComposition>();
 
+            if (elem != null)
+            {
+                GameObject itemGO = elem.gameObject;
+                Destroy(itemGO);
+
+            }
+        }
+            
         Vector3 spawnLocation = new Vector3(UnityEngine.Random.Range(-1.0f, 1.0f), 0f, UnityEngine.Random.Range(-1.5f, 1.5f));
         //var spawnRotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
 
